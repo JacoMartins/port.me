@@ -26,7 +26,7 @@ model Profile {
   display_name String
   welcome_phrase String
   description String
-  profile_picture String?
+  profile_picture String
 
   @@map("profiles")
 }
