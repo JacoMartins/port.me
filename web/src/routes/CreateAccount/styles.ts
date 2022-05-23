@@ -41,5 +41,37 @@ export const Main = styled.main`
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+
+    @keyframes spin {
+      0%{
+        transform: rotate(0deg);
+      }
+
+      100%{
+        transform: rotate(360deg);
+      }
+    }
+
+    button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+
+      &:disabled{
+        opacity: 0.8;
+      }
+      
+      svg{
+        animation: spin 1s infinite linear;
+      }
+    }
+
+    .link{
+      width: 100%;
+      button{
+        width: 100%;
+      }
+    }
   }
 `;
