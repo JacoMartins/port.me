@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 import { api } from "../../services/api";
-import { ProfileContainer, ProfilePicture } from "./styles";
-import { ArrowLeft } from 'phosphor-react';
+import { GoBackButton, ProfileContainer, ProfilePicture, Section } from "./styles";
+import { ArrowLeft, At, InstagramLogo, WhatsappLogo } from 'phosphor-react';
+import { IconButton } from "../../components/IconButton";
+import { IconButtonContainer } from "../../components/IconButton/styles";
+import { P600, P850 } from "../../global";
+import { BlockHeader } from "../../components/BlockHeader";
 
 interface Profile {
   username?: string;
@@ -25,7 +29,7 @@ export default function Profile() {
   return (
     <main>
       <ProfileContainer>
-        <button onClick={()=>{window.location.href = '/'}}><ArrowLeft size={24} /></button>
+        <GoBackButton onClick={() => { window.location.href = '/' }}><ArrowLeft size={24} /></GoBackButton>
 
         <div className="MainContainer">
           <div className="TextContainer">
@@ -39,6 +43,24 @@ export default function Profile() {
           <ProfilePicture src={profile.profile_picture} />
         </div>
       </ProfileContainer>
+
+      <Section>
+        <div className="MainContainer">
+          <h1>
+            Sobre mim
+          </h1>
+
+          <h2>Minhas raízes</h2>
+          <P600>Sou Bruna Félix, nascida em Fortaleza no Ceará, UX/UI, Designer Gráfica, Passionata por desenvolvimento de gráficos!</P600>
+          <BlockHeader title="Contatos" description="Fale comigo">
+            <IconButtonContainer>
+              <IconButton title="Me chame no Whatsapp" description="+55 (85) 99418-6689" icon={<WhatsappLogo />} action={() => { console.log('show') }} arrowRight={true} />
+              <IconButton title="Email" description="jaco.contato@gmail.com" icon={<At />} action={() => { console.log('show') }} arrowRight={true} />
+              <IconButton title="Instagram" description="@jaco.in" icon={<InstagramLogo />} action={() => { console.log('show') }} arrowRight={true} />
+            </IconButtonContainer>
+          </BlockHeader>
+        </div>
+      </Section>
     </main>
   )
 }

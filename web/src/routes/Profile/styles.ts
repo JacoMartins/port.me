@@ -13,28 +13,6 @@ export const ProfileContainer = styled.div`
   width: 100%;
   background: var(--dark-mode-cover);
   
-  
-  button {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: transparent;
-    outline: 0;
-    border: 0;
-    
-    transition: 0.2s;
-
-    &:hover{
-      filter: brightness(0.8);
-      transform: scale(110%);
-    }
-    
-    &:active {
-      filter: brightness(0.8);
-      transform: scale(100%);
-    }
-  }
-  
   .MainContainer{
     display: flex;
     flex-direction: row;
@@ -68,10 +46,46 @@ export const ProfileContainer = styled.div`
   }
 `;
 
+export const Section = styled.section`
+  border-top: solid 2px rgba(255,255,255, 0.08);
+  padding: 3rem 2.5rem;
+  text-align: center;
+`;
+
+export const SectionContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  
+  @media screen and (max-width: 720px){
+    flex-direction: column-reverse;
+  }
+`;
+
 export const ProfilePicture = styled.div`
   height: 18rem;
   width: 20rem;
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
   border-radius: 20rem;
+`;
+
+export const GoBackButton = styled.button`
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: transparent;
+    outline: 0;
+    border: 0;
+    
+    transition: 0.2s;
+
+    &:hover{
+      filter: brightness(0.8);
+      transform: scale(110%);
+    }
+    
+    &:active {
+      filter: brightness(0.8);
+      transform: scale(100%);
+    }
 `;

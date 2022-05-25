@@ -1,8 +1,8 @@
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --light-mode-blue: #2259E7;
+    --light-mode-blue: #1844b8;
     --dark-mode-blue: #4373f0;
     --yellow: #FFAC2F;
     --white-850: rgba(255, 255, 255, 0.85);
@@ -78,8 +78,62 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     padding: 0.5rem;
   }
-`; 
+
+  h1 {
+    --h1-font-size: 2rem;
+    font-size: var(--h1-font-size);
+    line-height: 150%;
+
+    @media screen and (max-width: 30.3125rem) {
+      font-size: calc(var(--h1-font-size) + 0.125rem);      
+    }
+  }
+
+  h2 {
+    --h2-font-size: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 150%;
+    @media screen and (max-width: 30.3125rem) {
+      font-size: calc(var(--h2-font-size) + 0.125rem);      
+    }
+  }
+
+  h3{
+    font-size: 1.125rem;
+    line-height: 150%;
+  }
+
+  p {
+    line-height: 125%;
+
+    @media screen and (max-width: 30.3125rem) {
+      font-size: calc(1rem + 0.125rem);      
+    }
+  }
+
+  ul, ol {
+    margin-top: 0.5rem;
+    line-height: 137.5%;
+
+    li {
+      list-style-position: inside;
+    } 
+  }
+`;
+
+export const P850 = styled.p`
+  color: var(--dark-mode-text-850);
+`;
+
+export const P600 = styled.p`
+  color: var(--dark-mode-text-600);
+`;
+
+export const P500 = styled.p`
+  color: var(--dark-mode-text-500);
+`;
 
 export const GlobalHeader = styled.header`
   
 `;
+
