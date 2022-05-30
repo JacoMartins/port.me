@@ -28,7 +28,7 @@ function App() {
           </form>
         </div>
 
-        <p>Não tem um perfil? <a><Link to='/post'>Poste um! (Em testes)</Link></a></p>
+        <p>Não tem um perfil? <Link to='/post'>Poste um! (Em testes)</Link></p>
       </Main>
     </>
   )

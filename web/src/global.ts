@@ -3,9 +3,19 @@ import styled, { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
   :root {
     --light-mode-blue: #1844b8;
+    --light-mode-blue-250: rgba(24, 68, 184, 0.25);
+    --light-mode-blue-400: rgba(24, 68, 184, 0.4);
+    --light-mode-blue-600: rgba(24, 68, 184, 0.6);
+    --light-mode-blue-800: rgba(24, 68, 184, 0.8);
     --dark-mode-blue: #4373f0;
+    --dark-mode-blue-250: rgba(67, 115, 240, 0.25);
+    --dark-mode-blue-400: rgba(67, 115, 240, 0.4);
+    --dark-mode-blue-600: rgba(67, 115, 240, 0.6);
+    --dark-mode-blue-800: rgba(67, 115, 240, 0.8);
+
     --yellow: #FFAC2F;
     --white-850: rgba(255, 255, 255, 0.85);
+    --white-250: rgba(255, 255, 255, 0.25);
 
     --light-mode-cover: #EEF1F9;
     --light-mode-background: #F9F9F9;
@@ -53,13 +63,17 @@ export const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
     background: var(--light-mode-blue);
-    border-radius: 0.5rem;
+    border-radius: 0.375rem;
     outline: 0;
     border: 0;
     font-size: 1rem;
     font-weight: 500;
-    padding: 0.5rem;
+    padding: 0.5rem 0.625rem;
     transition: 0.2s;
+
+    @media screen and (max-width: 30.3125rem) {
+      font-size: calc(1rem + 0.125rem);      
+    }
 
     &:hover {
       filter: brightness(0.8);
@@ -68,21 +82,48 @@ export const GlobalStyle = createGlobalStyle`
     &:active{
       transform: scale(98%);
     }
+
+    &:disabled{
+      opacity: 0.8;
+    }
   }
 
   input {
     background: var(--dark-mode-background);
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    border-radius: 0.5rem;
-    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.375rem;
+    outline: 0 solid rgba(255, 255, 255, 0.25);
     font-size: 1rem;
     padding: 0.5rem;
+    transition: 0.15s ease-in;
+
+    &:focus{
+      border: 1px solid var(--dark-mode-blue-600);     
+      outline: 2px solid var(--dark-mode-blue-250);     
+    }
   }
 
+  textarea {
+    background: var(--dark-mode-background);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.375rem;
+    outline: 0 solid rgba(255, 255, 255, 0.25);
+    font-size: 1rem;
+    padding: 0.5rem;
+    transition: 0.15s ease-in;
+
+    &:focus{
+      border: 1px solid var(--dark-mode-blue-600);     
+      outline: 2px solid var(--dark-mode-blue-250);     
+    }
+  }
+  
+
   h1 {
-    --h1-font-size: 2rem;
+    --h1-font-size: 2.25rem;
     font-size: var(--h1-font-size);
-    line-height: 150%;
+    line-height: 100%;
+    font-weight: 600;
 
     @media screen and (max-width: 30.3125rem) {
       font-size: calc(var(--h1-font-size) + 0.125rem);      
@@ -118,6 +159,21 @@ export const GlobalStyle = createGlobalStyle`
     li {
       list-style-position: inside;
     } 
+  }
+
+  svg.load{
+    animation: spin 1s infinite linear;
+    opacity: 0.6;
+  }
+
+  @keyframes spin {
+    0%{
+      transform: rotate(0deg);
+    }
+
+    100%{
+      transform: rotate(360deg);
+    }
   }
 `;
 
