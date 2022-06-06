@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Header } from './components/Header';
 import { Main } from './home_style';
 import { api } from './services/api';
 
@@ -16,10 +17,11 @@ function App() {
 
   return (
     <>
+      <Header showBackButton={false} showLogo={true} />
       <Main>
         <div className='LogoContainer'>
-          <h1>port<span>.me</span></h1>
-          <p>Pesquise portfolios pelo nome de usuário</p>
+          {/* <h1>port<span>.me</span></h1> */}
+          <h2>Pesquise portfolios pelo nome de usuário</h2>
         </div>
 
         <div className='FindPorfolioContainer'>
@@ -28,7 +30,7 @@ function App() {
           </form>
         </div>
 
-        <p>Não tem um perfil? <a><Link to='/post'>Poste um! (Em testes)</Link></a></p>
+        <p>Jacó Martins (maio de 2022)</p>
       </Main>
     </>
   )

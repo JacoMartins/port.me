@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-interface Props {
-}
-
 interface PercentProps {
   value: string;
 }
