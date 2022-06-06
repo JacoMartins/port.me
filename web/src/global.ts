@@ -2,16 +2,16 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --light-mode-blue: #1844b8;
+    --light-mode-blue: #2B6CB0;
     --light-mode-blue-250: rgba(24, 68, 184, 0.25);
     --light-mode-blue-400: rgba(24, 68, 184, 0.4);
     --light-mode-blue-600: rgba(24, 68, 184, 0.6);
     --light-mode-blue-800: rgba(24, 68, 184, 0.8);
-    --dark-mode-blue: #4373f0;
-    --dark-mode-blue-250: rgba(67, 115, 240, 0.25);
-    --dark-mode-blue-400: rgba(67, 115, 240, 0.4);
-    --dark-mode-blue-600: rgba(67, 115, 240, 0.6);
-    --dark-mode-blue-800: rgba(67, 115, 240, 0.8);
+    --dark-mode-blue: #3182CE;
+    --dark-mode-blue-250: rgba(49, 130, 206, 0.25);
+    --dark-mode-blue-400: rgba(49, 130, 206, 0.4);
+    --dark-mode-blue-600: rgba(49, 130, 206, 0.6);
+    --dark-mode-blue-800: rgba(49, 130, 206, 0.8);
 
     --yellow: #FFAC2F;
     --white-850: rgba(255, 255, 255, 0.85);
@@ -85,6 +85,14 @@ export const GlobalStyle = createGlobalStyle`
 
     &:disabled{
       opacity: 0.8;
+
+      &:hover {
+        filter: brightness(1);
+      }
+
+      &:active{
+        transform: scale(100%);
+      }
     }
   }
 
@@ -189,7 +197,39 @@ export const P500 = styled.p`
   color: var(--dark-mode-text-500);
 `;
 
-export const GlobalHeader = styled.header`
-  
+export const TransparentButton = styled.button`
+  cursor: pointer;
+  background: transparent;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  outline: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 0.625rem;
+  transition: 0.2s;
+
+  @media screen and (max-width: 30.3125rem) {
+    font-size: calc(1rem + 0.125rem);      
+  }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &:active{
+    transform: scale(98%);
+  }
+
+  &:disabled{
+    opacity: 0.8;
+
+    &:hover {
+      filter: brightness(1);
+    }
+
+    &:active{
+      transform: scale(100%);
+    }
+  }
 `;
 

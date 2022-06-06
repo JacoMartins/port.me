@@ -14,42 +14,62 @@ import { InfoGraphicContainer } from "../../components/InfoGraphic/styles";
 import { FrameContainer } from "../../components/Frame/styles";
 import { Frame } from "../../components/Frame";
 import { Header } from "../../components/Header";
+import NotFound from "../NotFound";
 
 interface Profile {
   username?: string;
-  display_name?: string;
-  welcome_phrase?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  greeting?: string;
   description?: string;
   profile_picture?: string;
+  error?: string;
+}
+
+interface Section {
+  id: string;
+  title: string;
 }
 
 export default function Profile() {
   const { username } = useParams();
 
   const [profile, setProfile] = useState<Profile>({});
+  const [sections, setSections] = useState([]);
   const [isDataReady, setIsDataReady] = useState(false);
+  const [status, setStatus] = useState(102);
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`p/${username}`).
-      then(response => {
-        setProfile(response.data.data);
-        setIsDataReady(true);
-      });
+    const fetch = async () => {
+      await api.get(`/profile?username=${username}`).
+        then(res => {
+          setProfile(res.status === 200 ? res.data : setStatus(404));
+          setIsDataReady(true);
+        });
+
+      await api.get(`/sections?username=${username}`)
+        .then(res => {
+          setSections(res.data);
+          setIsDataReady(true);
+        });
+
+      console.log(sections);
+    };
+
+    fetch();
   }, []);
 
-  if (!profile) {
-    navigate('/404');
+  if (status === 404) {
     return (
-      <LoadContainer>
-        <CircleNotch className="load" size={32} />
-      </LoadContainer>
+      <NotFound />
     );
   }
 
   return (
     <main>
-      <Header />
+      <Header showBackButton={true} showLogo={true} />
       <ProfileContainer>
         <div className="MainContainer">
           {
@@ -57,8 +77,8 @@ export default function Profile() {
               <>
                 <div className="TextContainer">
                   <h1>
-                    {`${profile.welcome_phrase} `}
-                    <span>{profile.display_name}</span>
+                    {`${profile.greeting} `}
+                    <span>{profile.first_name} {profile.last_name}</span>
                   </h1>
 
                   <p>{profile.description}</p>
@@ -76,30 +96,20 @@ export default function Profile() {
 
       {
         isDataReady ?
-          <Section>
-            <SectionContainer>
-              <div className="MainContainer">
-                <Title>
-                  Available components
-                </Title>
+          sections.map((section:Section) => (
+            <Section key={section.id}>
+              <SectionContainer>
+                <div className="MainContainer">
+                  <Title>
+                    {section.title}
+                  </Title>
 
-                <h2>Sub Header</h2>
-                <P600>Paragraph</P600>
-
-                <BlockHeader title="Category divider" description="You can put anything you want inside here">
-                  <InfoGraphicContainer>
-                    <InfoGraphic title="Percentage Info Component" percentage={60} />
-                    <IconButton title="Button" description="Interactive Button with an icon" icon={<Cursor size={24} />} arrowRight={true}/>
-                    <IconText title="Informational Text" description="Type any text you want here, and choose the icon you like the most." icon={<Keyboard weight='light' size={24} />} />
-                    <ColumnContainer>
-                      <Frame src={profile.profile_picture} />
-                      <P600>Insert frames to make your porfolio more interesting.</P600>
-                    </ColumnContainer>
-                  </InfoGraphicContainer>
-                </BlockHeader>
-              </div>
-            </SectionContainer>
-          </Section>
+                  <h2>Primeiras seções tiradas do back end</h2>
+                  <P600>legal pra caramba!</P600>
+                </div>
+              </SectionContainer>
+            </Section>
+          ))
           :
           <LoadContainer>
             <CircleNotch className="load" size={32} />

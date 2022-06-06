@@ -10,7 +10,7 @@ export const Section = styled.section`
   justify-content: center;
   border-top: solid 2px rgba(255,255,255, 0.08);
   padding: 2.5rem 2.5rem;
-  text-align: left;
+  text-align: center;
 `;
 
 export const SectionContainer = styled.div`

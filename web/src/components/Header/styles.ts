@@ -16,6 +16,7 @@ export const HeaderBody = styled.header`
   backdrop-filter: ${(props:HeaderStylesProps) => props.headerType === 1? 'blur(0px)' : 'blur(30px)'};
   outline: ${(props:HeaderStylesProps) => props.headerType === 1? '0px solid rgba(255,255,255, 0.08)' : '2px solid rgba(255,255,255, 0.08)'};
   z-index: 9999;
+  padding: 0 1rem;
 
   @media screen and (max-width: 720px){
     height: 4.5rem;
@@ -26,7 +27,7 @@ export const HeaderBody = styled.header`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
 
     .LogoContainer {
       justify-self: left;
@@ -54,6 +55,13 @@ export const HeaderBody = styled.header`
       p{
         color: var(--dark-mode-text-500);
       }
+    }
+
+    .NavContainer{
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
     }
   }
 `;
