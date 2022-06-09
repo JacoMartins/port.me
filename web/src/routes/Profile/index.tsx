@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from "../../services/api";
 import { ColumnContainer, GoBackButton, LoadContainer, ProfileContainer, ProfilePicture, Section, SectionContainer, Title } from "./styles";
-import { ArrowLeft, At, CircleNotch, Cookie, Cursor, InstagramLogo, Keyboard, WhatsappLogo } from 'phosphor-react';
+import { ArrowLeft, At, CircleNotch, Cookie, Cursor, InstagramLogo, Keyboard, User, WhatsappLogo } from 'phosphor-react';
 import { IconButton } from "../../components/IconButton";
 import { IconButtonContainer } from "../../components/IconButton/styles";
 import { P600, P850 } from "../../global";
@@ -15,6 +15,9 @@ import { FrameContainer } from "../../components/Frame/styles";
 import { Frame } from "../../components/Frame";
 import { Header } from "../../components/Header";
 import NotFound from "../NotFound";
+import { Add } from "../../components/Add";
+import Modal from 'react-modal';
+import { NewSection } from "../../components/NewSection";
 
 interface Profile {
   username?: string;
@@ -24,6 +27,7 @@ interface Profile {
   greeting?: string;
   description?: string;
   profile_picture?: string;
+  profile_cover?: string;
   error?: string;
 }
 
@@ -40,6 +44,8 @@ export default function Profile() {
   const [isDataReady, setIsDataReady] = useState(false);
   const [status, setStatus] = useState(102);
   const navigate = useNavigate();
+
+  const [isNewSectionModalOpen, setIsNewSectionModalOpen] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -67,10 +73,19 @@ export default function Profile() {
     );
   }
 
+  function handleOpenNewSectionModal() {
+    setIsNewSectionModalOpen(true);
+  }
+
+  function handleCloseNewSectionModal() {
+    setIsNewSectionModalOpen(false);
+  }
+
   return (
     <main>
+      <NewSection isOpen={isNewSectionModalOpen} onRequestClose={handleCloseNewSectionModal} />
       <Header showBackButton={true} showLogo={true} />
-      <ProfileContainer>
+      <ProfileContainer id="ProfileContainer" src={profile.profile_cover}>
         <div className="MainContainer">
           {
             isDataReady ?
@@ -86,11 +101,14 @@ export default function Profile() {
                   <button type="button">Entrar em Contato</button>
                 </div>
 
-                <ProfilePicture src={profile.profile_picture} />
+                <ProfilePicture src={profile.profile_picture}>
+                  <User size={128}/>
+                </ProfilePicture>
               </>
               :
               <CircleNotch size={32} className="load" />
           }
+          <div className="backgroundFilter" />
         </div>
       </ProfileContainer>
 
@@ -104,8 +122,7 @@ export default function Profile() {
                     {section.title}
                   </Title>
 
-                  <h2>Primeiras seções tiradas do back end</h2>
-                  <P600>legal pra caramba!</P600>
+                  <h2>Seções</h2>
                 </div>
               </SectionContainer>
             </Section>
@@ -115,6 +132,7 @@ export default function Profile() {
             <CircleNotch className="load" size={32} />
           </LoadContainer>
       }
+      <Add openNewSectionModal={handleOpenNewSectionModal}/>
     </main>
   )
 }

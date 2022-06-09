@@ -1,47 +1,64 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Main } from "./styles";
-import { ArrowLeft, CircleNotch } from 'phosphor-react';
+import { ArrowLeft, Check, CircleNotch } from 'phosphor-react';
 import { GoBackButton } from "../Profile/styles";
 import { P850 } from "../../global";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const [id, setId] = useState('');
+  const [identificator, setIdentificator] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
 
   const [isSendingData, setIsSendingData] = useState(false);
-  const [isAlreadySent, setIsAlreadySent] = useState(false);
+
+  const { signIn, error, isAuthenticated } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState<string | null>(null);
-
-  function verifyForm() {
+  async function Authenticate() {
     event?.preventDefault();
-    const charBlock = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÁÇÉǴÍḰĹḾŃÓṔŔŚÚǗẂÝŹḈÀÈÌǸÒÙǛẀỲÃẼĨÑÕŨṼỸãẽĩñõũṽỹÂĈÊĜĤÎĴÔŜÛṼỸâĉêĝĥîĵôŝûŵŷẑàìǹòùǜẁỳáçéǵíḱĺḿńóṕŕśúǘẃýź!#$%¨&*()-=[]~^`´:;/?>.<,| ';
-    let err = '';
+    
+    setIsSendingData(true);
 
-    const charBlockArray = charBlock.split('');
+    const data = {
+      identificator,
+      password
+    };
 
-    for (let n = charBlockArray.length; n > -1; n--) {
-      if (
-        id.includes(charBlockArray[n])
-      ) {
-        error !== 'Nome de usuário inválido!' ? setError('Nome de usuário inválido!') : null;
+    // event?.preventDefault();
 
-        return;
-      }
-    }
+    // setIsSendingData(true);
+    // setIsAlreadySent(false);
 
-    if (id === '' || password === '') {
-      setError('Por favor, preencha todos os campos!');
-      return;
-    }
+    // try {
 
-    if (password.length < 8) { } else { setError('Senha inválida.'); return; }
+    //   await api.post('/auth', data)
+    //     .then(async res => {
+    //       setToken(await res.data);
+    //       setError(null);
+    //     });
 
-    setError(null);
-    err ? console.log(`Nome de usuário: "${id}". \n\nERRO: ${err}`) : console.log('show');
+    //   navigate(`/profile/${identificator}`);
+
+    // } catch (POST) {
+    //   setError('Nome de usuário ou senha inválidos.');
+    // }
+
+    // console.log(token);
+
+    // setIsSendingData(false);
+    // setIsAlreadySent(true);
+
+    signIn(data).then();
+    
+    setTimeout(() => {
+      console.log(isAuthenticated)
+    }, 1000);
+    setIsSendingData(false);
+    isAuthenticated ? navigate(`/profile/${identificator}`) : null;
   }
 
   return (
@@ -50,21 +67,25 @@ export default function Login() {
         <GoBackButton onClick={() => { navigate('/') }}><ArrowLeft size={24} /></GoBackButton>
 
         <div className='LogoContainer'>
-          <h1>port<span>.me</span></h1>
+          <h1>port<span>me</span></h1>
         </div>
 
         <div className='Container'>
           <h2>Entrar</h2>
-          <form onSubmit={verifyForm}>
-            <input type='text' placeholder='Email ou nome de usuário' onChange={() => { setId((event?.target as HTMLInputElement).value) }} />
+
+          <form onSubmit={Authenticate}>
+            <input type='text' placeholder='Email ou nome de usuário' onChange={() => { setIdentificator((event?.target as HTMLInputElement).value) }} />
             <input type='password' placeholder='Senha' onChange={() => { setPassword((event?.target as HTMLInputElement).value) }} />
 
             {error ? <P850>{error}</P850> : null}
 
-            {isSendingData ?
-              <button disabled type="submit"><CircleNotch className="load" size={16} weight='bold' />Autenticando...</button>
+            {isAuthenticated ?
+              <button disabled type="submit"><Check size={16} weight='bold' />Autenticado</button>
               :
-              <button type="submit">Entrar</button>
+              isSendingData ?
+                <button disabled type="submit"><CircleNotch className="load" size={16} weight='bold' />Autenticando...</button>
+                :
+                <button type="submit">Entrar</button>
             }
           </form>
         </div>

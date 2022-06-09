@@ -3,10 +3,10 @@ import { AuthenticateAccountUseCase } from './authenticateAccountUseCase';
 
 export class AuthenticateAccountController {
   async handle(req: Request, res: Response) {
-    const { username, email, password } = req.body;
+    const { identificator, password } = req.body;
 
     const authAccountUseCase = new AuthenticateAccountUseCase();
-    const result = await authAccountUseCase.execute({ username, email, password });
+    const result = await authAccountUseCase.execute({ identificator, password });
 
     return res.json(result);
   }

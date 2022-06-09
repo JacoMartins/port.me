@@ -6,6 +6,7 @@ import { GetProfile } from './useCases/findProfile';
 import { GetAllSections } from './useCases/findSection';
 import { GetSection } from './useCases/findSection';
 import { PostSectionController } from './useCases/postSection/postSectionController';
+import { RefreshTokenController } from './useCases/refreshToken/refreshTokenController';
 
 export const routes = express.Router();
 
@@ -15,10 +16,12 @@ const authAccount = new AuthenticateAccountController();
 const postSection = new PostSectionController();
 const findAllSections = new GetAllSections();
 const findSection = new GetSection();
+const refreshToken = new RefreshTokenController();
 
 routes.post('/accounts', createAccount.handle);
 
 routes.post('/auth', authAccount.handle);
+routes.post('/refresh-token', refreshToken.handle)
 
 routes.put('/profile');
 

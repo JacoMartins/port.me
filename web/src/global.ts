@@ -2,12 +2,12 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --light-mode-blue: #2B6CB0;
+    --light-mode-blue: #1844b8;
     --light-mode-blue-250: rgba(24, 68, 184, 0.25);
     --light-mode-blue-400: rgba(24, 68, 184, 0.4);
     --light-mode-blue-600: rgba(24, 68, 184, 0.6);
     --light-mode-blue-800: rgba(24, 68, 184, 0.8);
-    --dark-mode-blue: #3182CE;
+    --dark-mode-blue: #3182ce;
     --dark-mode-blue-250: rgba(49, 130, 206, 0.25);
     --dark-mode-blue-400: rgba(49, 130, 206, 0.4);
     --dark-mode-blue-600: rgba(49, 130, 206, 0.6);
@@ -181,6 +181,95 @@ export const GlobalStyle = createGlobalStyle`
 
     100%{
       transform: rotate(360deg);
+    }
+  }
+
+  .react-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+
+  .react-modal-content {
+    width: 100%;
+    max-width: 576px;
+    background: var(--dark-mode-background);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    z-index: 999;
+  }
+
+  .react-modal-close{
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    border: 0;
+    background: transparent;
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    z-index: 999;
+  }
+
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 1.75rem;
+    
+    div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: solid 1px rgba(255, 255, 255, 0.25);
+      border-radius: 0.25rem;
+      margin-right: 0.375rem;
+      cursor: pointer;
+
+      transition: 0.15s;
+      
+      svg {
+        display: none;
+      }
+    }
+
+    input[type=checkbox]:checked~div {
+      background: var(--light-mode-blue);
+      border: 0;
+      
+      svg {
+        display: block;
+        color: white;
+        font-weight: 600;
+      }
+    }
+
+    input[type=checkbox] {
+      position: absolute;
+      width: 0;
+      height: 0;
+      margin-right: 0.25rem;
+      opacity: 0;
+      cursor: pointer;
     }
   }
 `;

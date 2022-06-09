@@ -1,22 +1,40 @@
-import { ArrowLeft } from 'phosphor-react';
-import { useEffect, useState } from 'react';
+import { ArrowLeft, User } from 'phosphor-react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 import { TransparentButton } from '../../global';
-import { GoBackButton, HeaderBody } from './styles';
+import { api } from '../../services/api';
+import { GoBackButton, HeaderBody, LoginButton, ProfilePicture } from './styles';
 
 interface HeaderProps {
   showLogo: boolean;
   showBackButton: boolean;
 }
 
+interface Profile {
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  greeting?: string;
+  description?: string;
+  profile_picture?: string;
+  error?: string;
+}
+
 export function Header({ showLogo, showBackButton }: HeaderProps) {
   const [headerType, setHeaderType] = useState(1);
-  const [currentPath, setCurrentPath] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [profile, setProfile] = useState<Profile>({});
+
+  const { isAuthenticated, account } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentPath(window.location.pathname);
+    if (isAuthenticated) {
+      const fetch = api.get(`/profile?username=${account?.username}`)
+        .then(res => setProfile(res.data));
+    }
   }, []);
 
   window.addEventListener('scroll', () => {
@@ -32,17 +50,22 @@ export function Header({ showLogo, showBackButton }: HeaderProps) {
   return (
     <HeaderBody headerType={headerType}>
       <div className='Container'>
-        {showBackButton ? <GoBackButton onClick={() => { navigate('/') }}><ArrowLeft size={24} /></GoBackButton> : null}
         {showLogo ?
           <div className='LogoContainer'>
-            <h1>port<span>.me</span></h1>
+            {showBackButton ? <GoBackButton onClick={() => { navigate('/') }}><ArrowLeft size={24} /></GoBackButton> : null}
+            <h1>port<span>me</span></h1>
           </div>
           :
           null
         }
         <div className='NavContainer'>
           {isAuthenticated ?
-            <button type="button" disabled>Jacó Martins</button>
+            <LoginButton>
+              <ProfilePicture src={profile.profile_picture}>
+                <User size={18} weight={'bold'} />
+              </ProfilePicture>
+              {account?.username}
+            </LoginButton>
             : (
               <>
                 <TransparentButton type="button" onClick={() => navigate('/create')}>Criar uma conta</TransparentButton>

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import { Main } from "./styles";
 import { ArrowLeft, CircleNotch } from 'phosphor-react';
 import { GoBackButton } from "../Profile/styles";
 import { P850 } from "../../global";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function CreateAccount() {
   const [username, setUsername] = useState('');
@@ -16,6 +17,8 @@ export default function CreateAccount() {
 
   const [isSendingData, setIsSendingData] = useState(false);
   const [isAlreadySent, setIsAlreadySent] = useState(false);
+
+  const {signIn} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -62,7 +65,10 @@ export default function CreateAccount() {
       email,
       password,
       username
-    });
+    }).then(
+    );
+    
+    
 
     setIsAlreadySent(true);
     setIsSendingData(false);
@@ -74,23 +80,23 @@ export default function CreateAccount() {
         <GoBackButton onClick={() => { navigate('/') }}><ArrowLeft size={24} /></GoBackButton>
 
         <div className='LogoContainer'>
-          <h1>port<span>.me</span></h1>
+          <h1>port<span>me</span></h1>
         </div>
 
         <div className='Container'>
           <h2>Criar uma conta</h2>
           <form onSubmit={verifyForm}>
-            <input type='text' placeholder='Nome de usuário' onChange={() => { setUsername((event?.target as HTMLInputElement).value) }} />
+            <input type='text' placeholder='Nome de usuário' required onChange={() => { setUsername((event?.target as HTMLInputElement).value) }} />
 
             <div className="NameContainer">
-              <input type='text' placeholder='Nome' onChange={() => { setFirstName((event?.target as HTMLInputElement).value) }} />
-              <input type='text' placeholder='Sobrenome' onChange={() => { setLastName((event?.target as HTMLInputElement).value) }} />
+              <input type='text' placeholder='Nome' required onChange={() => { setFirstName((event?.target as HTMLInputElement).value) }} />
+              <input type='text' placeholder='Sobrenome' required onChange={() => { setLastName((event?.target as HTMLInputElement).value) }} />
             </div>
 
-            <input type='text' placeholder='Endereço de email' onChange={() => { setEmail((event?.target as HTMLInputElement).value) }} />
+            <input type='email' placeholder='Endereço de email required' onChange={() => { setEmail((event?.target as HTMLInputElement).value) }} />
 
-            <input type='password' placeholder='Senha' onChange={() => { setPassword((event?.target as HTMLInputElement).value) }} />
-            <input type='password' placeholder='Confirmar senha' onChange={() => { setConfirmPassword((event?.target as HTMLInputElement).value) }} />
+            <input type='password' placeholder='Senha' pattern=".{8,}" required onChange={() => { setPassword((event?.target as HTMLInputElement).value) }} />
+            <input type='password' placeholder='Confirmar senha' pattern=".{8,}" required onChange={() => { setConfirmPassword((event?.target as HTMLInputElement).value) }} />
 
             {error ? <P850>{error}</P850> : null}
 

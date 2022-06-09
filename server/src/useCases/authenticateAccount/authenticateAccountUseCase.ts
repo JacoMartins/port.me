@@ -2,22 +2,31 @@ import { prisma } from '../../prisma';
 import { Request, Response } from 'express';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import auth from '../../config/auth';
+import { DateProvider } from '../../functions/DateProviders';
 
 interface IAuthenticateAccount {
-  username: string;
-  email: string;
+  identificator: string;
   password: string;
 }
 
+const dateProvider = new DateProvider();
+
 export class AuthenticateAccountUseCase {
-  async execute({ username, email, password }: IAuthenticateAccount) {
+  async execute({ identificator, password }: IAuthenticateAccount) {
     //receber username e password
+    const { 
+      secret_token, 
+      expires_in_token, 
+      expires_in_refresh_token, 
+      expires_refresh_token_days,
+      secret_refresh_token
+    } = auth;
 
     const account = await prisma.account.findFirst(
       {
         where: {
-          username,
-          email
+          username: identificator,
         }
       }
     );
@@ -38,17 +47,40 @@ export class AuthenticateAccountUseCase {
 
     // gerar token
 
-    const token = sign({username}, 'aeb014037644e19d124d603ff9b3ed75', {
+    const refresh_token = sign({ identificator }, secret_refresh_token, {
       subject: account.id,
-      expiresIn: "1d"
+      expiresIn: expires_in_refresh_token
+    });
+
+    const refresh_token_expires_date = dateProvider.addDays(expires_refresh_token_days);
+
+    const refreshToken = await prisma.accountToken.create({
+      data: {
+        refresh_token,
+        expires_date: refresh_token_expires_date,
+        created_at: new Date(),
+
+        account_token: {
+          connect: {
+            id: account.id
+          }
+        }
+      }
+    });
+
+
+    const token = sign({ identificator }, secret_token, {
+      subject: account.id,
+      expiresIn: expires_in_token
     });
 
     const tokenReturn = {
       token,
-      authedAccount: {
-        username,
-        email
-      }
+      account: {
+        username: account.username,
+        email: account.email
+      },
+      refresh_token
     };
 
     return tokenReturn;

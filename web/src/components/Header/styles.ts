@@ -4,6 +4,10 @@ interface HeaderStylesProps{
   headerType: number;
 }
 
+interface ProfilePictureProps {
+  src?: string;
+}
+
 export const HeaderBody = styled.header`
   position: fixed;
   display: flex;
@@ -15,7 +19,7 @@ export const HeaderBody = styled.header`
   background: ${(props:HeaderStylesProps) => props.headerType === 1? 'rgba(0,0,0, 0.00)' : 'rgba(24, 25, 28, 0.65)'};
   backdrop-filter: ${(props:HeaderStylesProps) => props.headerType === 1? 'blur(0px)' : 'blur(30px)'};
   outline: ${(props:HeaderStylesProps) => props.headerType === 1? '0px solid rgba(255,255,255, 0.08)' : '2px solid rgba(255,255,255, 0.08)'};
-  z-index: 9999;
+  z-index: 998;
   padding: 0 1rem;
 
   @media screen and (max-width: 720px){
@@ -30,6 +34,8 @@ export const HeaderBody = styled.header`
     justify-content: space-between;
 
     .LogoContainer {
+      display: flex;
+      flex-direction: row;
       justify-self: left;
       @media screen and (max-width: 720px){
         justify-self: center;
@@ -85,4 +91,41 @@ export const GoBackButton = styled.button`
       filter: brightness(0.8);
       transform: scale(100%);
     }
+`;
+
+export const LoginButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent;
+  border: solid 0px var(--light-mode-blue);
+  border-radius: 90rem;
+  font-size: 1.125rem;
+  margin: 1rem 0;
+  padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+
+  div {
+    margin-right: 0.5rem;
+  }
+`;
+
+export const ProfilePicture = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.75rem;
+  width: 2rem;
+  background-image: url(${(props: ProfilePictureProps) => props.src});
+  background-size: cover;
+  border-radius: 20rem;
+  border: ${(props: ProfilePictureProps) => props.src? 'none' : 'none'};
+
+  @media screen and (max-width: 720px){
+    height: 1.75rem;
+    width: 2rem;
+  }
+
+  svg {
+    display: ${(props: ProfilePictureProps) => props.src? 'none' : 'block'};
+  }
 `;

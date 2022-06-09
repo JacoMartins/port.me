@@ -33,10 +33,19 @@ export const ProfileContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   height: auto;
   padding: 6.5rem 3rem 3rem 3rem;
   width: 100%;
+  z-index: 0;
+
+  overflow: hidden;
+
   background: var(--dark-mode-cover);
+  background-image: url(${(props: ProfilePictureProps) => props.src});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   @media screen and (max-width: 480px){
     padding: 7.5rem 3rem 4rem 3rem;
@@ -48,6 +57,7 @@ export const ProfileContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 720px;
+    z-index: 2;
     
     @media screen and (max-width: 720px){
       flex-direction: column-reverse;
@@ -75,20 +85,38 @@ export const ProfileContainer = styled.div`
         margin-bottom: 2rem;
       }
     }
+
+    .backgroundFilter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: ${() => document.getElementById('ProfileContainer')?.offsetHeight}px;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: -1;
+    }
   }
 `;
 
 
 export const ProfilePicture = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 14rem;
   width: 16rem;
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
   border-radius: 20rem;
+  border: ${(props: ProfilePictureProps) => props.src? 'none' : 'solid 2px var(--white-850)'};
 
   @media screen and (max-width: 720px){
     height: 14rem;
     width: 16rem;
+  }
+
+  svg {
+    display: ${(props: ProfilePictureProps) => props.src? 'none' : 'block'};
   }
 `;
 
