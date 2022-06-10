@@ -20,6 +20,8 @@ model Account {
   password      String
   priv_level    Int?
 
+  tokens        AccountToken[]
+
   profile       Profile @relation(fields: [username], references: [username])
 
   @@map("accounts")
@@ -27,16 +29,16 @@ model Account {
 
 model Profile {
   username            String @id @unique
-  first_name          String?
-  last_name           String?
-  email               String?
-  greeting            String?
+  first_name          String
+  last_name           String
+  email               String
+  greeting            String
   color               String?
   description         String
   profile_picture     String?
   profile_cover       String?
   profile_animation   String?
-  id                  String? @default(uuid())
+  id                  String @default(uuid())
 
   account             Account?
 
@@ -53,4 +55,16 @@ model Sections{
   profile       Profile @relation(fields: [username], references: [username])
 
   @@map("sections")
+}
+
+model AccountToken {
+  id              String @id @default(uuid())
+  refresh_token   String @db.VarChar()
+  account_id      String
+  expires_date    DateTime
+  created_at      DateTime
+
+  account_token  Account @relation(fields: [account_id], references: [id])
+
+  @@map("account_tokens")
 }
