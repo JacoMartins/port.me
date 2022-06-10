@@ -1,22 +1,48 @@
-import { ArrowLeft } from 'phosphor-react';
-import { useEffect, useState } from 'react';
+import { ArrowLeft, SignOut, Target, User } from 'phosphor-react';
+import { createRef, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { AuthContext } from '../../contexts/AuthContext';
 import { TransparentButton } from '../../global';
-import { GoBackButton, HeaderBody } from './styles';
+import { api } from '../../services/api';
+import { MenuButton } from '../MenuButton';
+import { GoBackButton, HeaderBody, LoginButton, Menu, ProfilePicture } from './styles';
 
 interface HeaderProps {
   showLogo: boolean;
   showBackButton: boolean;
 }
 
+interface Profile {
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  greeting?: string;
+  description?: string;
+  profile_picture?: string;
+  error?: string;
+}
+
 export function Header({ showLogo, showBackButton }: HeaderProps) {
   const [headerType, setHeaderType] = useState(1);
-  const [currentPath, setCurrentPath] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [profile, setProfile] = useState<Profile>({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const cookies = new Cookies();
+
+  const { isAuthenticated, account, signOut } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentPath(window.location.pathname);
+    if (isAuthenticated) {
+      const fetch = async () => {
+        await api.get(`/profile?username=${account?.username}`)
+          .then(res => setProfile(res.data))
+      };
+
+      fetch();
+    }
   }, []);
 
   window.addEventListener('scroll', () => {
@@ -29,12 +55,16 @@ export function Header({ showLogo, showBackButton }: HeaderProps) {
     }
   });
 
+  function menuHandle() {
+    setIsMenuOpen(!isMenuOpen);
+  }
+
   return (
     <HeaderBody headerType={headerType}>
       <div className='Container'>
-        {showBackButton ? <GoBackButton onClick={() => { navigate('/') }}><ArrowLeft size={24} /></GoBackButton> : null}
         {showLogo ?
-          <div className='LogoContainer'>
+          <div className='LogoContainer' onClick={() => navigate('/')}>
+            {showBackButton ? <GoBackButton onClick={() => { navigate(-1) }}><ArrowLeft size={24} /></GoBackButton> : null}
             <h1>port<span>.me</span></h1>
           </div>
           :
@@ -42,7 +72,23 @@ export function Header({ showLogo, showBackButton }: HeaderProps) {
         }
         <div className='NavContainer'>
           {isAuthenticated ?
-            <button type="button" disabled>Jacó Martins</button>
+            <>
+              <LoginButton onClick={menuHandle}>
+                <ProfilePicture src={profile.profile_picture}>
+                  <User size={18} weight={'bold'} />
+                </ProfilePicture>
+                {account?.username}
+              </LoginButton>
+
+              {isMenuOpen ?
+                <Menu className="menu" onBlur={menuHandle}>
+                  <MenuButton icon={<User size={16} weight={'bold'} />} onClick={() => { navigate(`/profile/${account?.username}`); navigate(0); }}>Meu perfil</MenuButton>
+                  <hr></hr>
+                  <MenuButton icon={<SignOut size={16} weight={'bold'} />} onClick={signOut}>Sair</MenuButton>
+                </Menu> :
+                null
+              }
+            </>
             : (
               <>
                 <TransparentButton type="button" onClick={() => navigate('/create')}>Criar uma conta</TransparentButton>

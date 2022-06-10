@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from "../../services/api";
 import { ColumnContainer, GoBackButton, LoadContainer, ProfileContainer, ProfilePicture, Section, SectionContainer, Title } from "./styles";
-import { ArrowLeft, At, CircleNotch, Cookie, Cursor, InstagramLogo, Keyboard, WhatsappLogo } from 'phosphor-react';
+import { ArrowLeft, At, CircleNotch, Cookie, Cursor, InstagramLogo, Keyboard, Trash, User, WhatsappLogo } from 'phosphor-react';
 import { IconButton } from "../../components/IconButton";
 import { IconButtonContainer } from "../../components/IconButton/styles";
-import { P600, P850 } from "../../global";
+import { P600, P850, TransparentButton } from "../../global";
 import { BlockHeader } from "../../components/BlockHeader";
 import { IconTextContainer } from "../../components/IconText/styles";
 import { IconText } from "../../components/IconText";
@@ -15,6 +15,11 @@ import { FrameContainer } from "../../components/Frame/styles";
 import { Frame } from "../../components/Frame";
 import { Header } from "../../components/Header";
 import NotFound from "../NotFound";
+import { Add } from "../../components/Add";
+import Modal from 'react-modal';
+import { NewSection } from "../../components/NewSection";
+import { AuthContext } from "../../contexts/AuthContext";
+import { AxiosRequestConfig } from "axios";
 
 interface Profile {
   username?: string;
@@ -24,6 +29,7 @@ interface Profile {
   greeting?: string;
   description?: string;
   profile_picture?: string;
+  profile_cover?: string;
   error?: string;
 }
 
@@ -33,29 +39,42 @@ interface Section {
 }
 
 export default function Profile() {
+  const { account } = useContext(AuthContext);
   const { username } = useParams();
 
   const [profile, setProfile] = useState<Profile>({});
   const [sections, setSections] = useState([]);
   const [isDataReady, setIsDataReady] = useState(false);
   const [status, setStatus] = useState(102);
+
   const navigate = useNavigate();
+
+  const [isNewSectionModalOpen, setIsNewSectionModalOpen] = useState(false);
+
+  const isItMyAccount = account?.username === username;
 
   useEffect(() => {
     const fetch = async () => {
-      await api.get(`/profile?username=${username}`).
-        then(res => {
-          setProfile(res.status === 200 ? res.data : setStatus(404));
-          setIsDataReady(true);
-        });
+      try {
+        await api.get(`/profile?username=${username}`).
+          then(res => {
+            setProfile(res.data);
+            setStatus(200);
+            setIsDataReady(true);
+          });
 
-      await api.get(`/sections?username=${username}`)
-        .then(res => {
-          setSections(res.data);
-          setIsDataReady(true);
-        });
+        await api.get(`/sections?username=${username}`)
+          .then(res => {
+            setSections(res.data);
+            setStatus(200);
+            setIsDataReady(true);
+          });
+      } catch (GET) {
+        setStatus(404);
+        return;
+      }
 
-      console.log(sections);
+      console.log(profile);
     };
 
     fetch();
@@ -67,10 +86,31 @@ export default function Profile() {
     );
   }
 
+  function handleOpenNewSectionModal() {
+    setIsNewSectionModalOpen(true);
+  }
+
+  function handleCloseNewSectionModal() {
+    setIsNewSectionModalOpen(false);
+  }
+
+  async function handleDeleteSection(id: string) {
+    event?.preventDefault();
+
+    await api.delete('/section', {
+      data: {
+        id
+      }
+    });
+
+    navigate(`/profile/${username}`); navigate(0);
+  }
+
   return (
     <main>
+      <NewSection isOpen={isNewSectionModalOpen} onRequestClose={handleCloseNewSectionModal} />
       <Header showBackButton={true} showLogo={true} />
-      <ProfileContainer>
+      <ProfileContainer id="ProfileContainer" src={profile.profile_cover}>
         <div className="MainContainer">
           {
             isDataReady ?
@@ -84,9 +124,15 @@ export default function Profile() {
                   <p>{profile.description}</p>
 
                   <button type="button">Entrar em Contato</button>
+
+                  {isItMyAccount ?
+                    <TransparentButton type="button" onClick={() => navigate('/edit')}>Editar perfil</TransparentButton>
+                    : null}
                 </div>
 
-                <ProfilePicture src={profile.profile_picture} />
+                <ProfilePicture src={profile.profile_picture}>
+                  <User size={128} />
+                </ProfilePicture>
               </>
               :
               <CircleNotch size={32} className="load" />
@@ -96,16 +142,18 @@ export default function Profile() {
 
       {
         isDataReady ?
-          sections.map((section:Section) => (
+          sections.map((section: Section) => (
             <Section key={section.id}>
               <SectionContainer>
                 <div className="MainContainer">
+                  {isItMyAccount ?
+                    <button type="button" onClick={() => handleDeleteSection(section.id)}><Trash size={16} weight='bold' /></button>
+                  : null}
                   <Title>
                     {section.title}
                   </Title>
 
-                  <h2>Primeiras seções tiradas do back end</h2>
-                  <P600>legal pra caramba!</P600>
+                  <h2>Seções</h2>
                 </div>
               </SectionContainer>
             </Section>
@@ -115,6 +163,7 @@ export default function Profile() {
             <CircleNotch className="load" size={32} />
           </LoadContainer>
       }
+      <Add openNewSectionModal={handleOpenNewSectionModal} />
     </main>
   )
 }

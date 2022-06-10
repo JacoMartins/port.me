@@ -16,6 +16,17 @@ export const Section = styled.section`
 export const SectionContainer = styled.div`
   width: auto;
   max-width: 720px;
+
+  .MainContainer {
+    button {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      right: 1rem;
+      transform: translateY(-1.5rem);
+    }
+  }
     
   @media screen and (max-width: 720px){
     flex-direction: column-reverse;
@@ -33,10 +44,20 @@ export const ProfileContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   height: auto;
   padding: 6.5rem 3rem 3rem 3rem;
   width: 100%;
-  background: var(--dark-mode-cover);
+  z-index: 0;
+
+  overflow: hidden;
+
+  background-color: rgba(75, 75, 75, 1);
+  background-image: url(${(props: ProfilePictureProps) => props.src});
+  background-blend-mode: multiply;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   @media screen and (max-width: 480px){
     padding: 7.5rem 3rem 4rem 3rem;
@@ -48,6 +69,7 @@ export const ProfileContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 720px;
+    z-index: 2;
     
     @media screen and (max-width: 720px){
       flex-direction: column-reverse;
@@ -74,21 +96,32 @@ export const ProfileContainer = styled.div`
         color: var(--dark-mode-text-600);
         margin-bottom: 2rem;
       }
+      button{
+        margin-right: 0.375rem;  
+      }
     }
   }
 `;
 
 
 export const ProfilePicture = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 14rem;
   width: 16rem;
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
   border-radius: 20rem;
+  border: ${(props: ProfilePictureProps) => props.src? 'none' : 'solid 2px var(--white-850)'};
 
   @media screen and (max-width: 720px){
     height: 14rem;
     width: 16rem;
+  }
+
+  svg {
+    display: ${(props: ProfilePictureProps) => props.src? 'none' : 'block'};
   }
 `;
 
