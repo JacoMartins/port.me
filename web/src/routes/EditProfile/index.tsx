@@ -1,10 +1,11 @@
 import { CircleNotch, User } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Header } from "../../components/Header";
+import { useNavigate, useParams } from "react-router-dom";
+import { Header } from "../../components/Base/Header";
 import { AuthContext } from "../../contexts/AuthContext";
 import { P600 } from "../../global";
 import { api } from "../../services/api";
+import NotFound from "../NotFound";
 import { LoadContainer } from "../Profile/styles";
 import { Container, ProfileContainer, ProfilePicture } from "./styles";
 
@@ -34,6 +35,7 @@ export default function EditProfile() {
   const [profilePicture, setProfilePicture] = useState('');
   const [profileCover, setProfileCover] = useState('');
   const [isSendingData, setIsSendingData] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetch = async () => {
@@ -60,6 +62,12 @@ export default function EditProfile() {
     fetch();
   }, []);
 
+  if(!account?.username){
+    return(
+      <NotFound />
+    )
+  }
+
   async function updateProfile() {
     event?.preventDefault();
     setIsSendingData(true);
@@ -74,6 +82,8 @@ export default function EditProfile() {
     })
 
     setIsSendingData(false);
+    navigate(`/profile/${profile.username}`);
+    navigate(0);
   }
 
   return (
@@ -85,7 +95,7 @@ export default function EditProfile() {
             <h1>Editar Perfil</h1>
 
             <h2>Prévia</h2>
-            <ProfileContainer src={profile.profile_cover as string}>
+            <ProfileContainer src={profileCover as string}>
 
               <div className="MainContainer">
                 <div className="TextContainer">

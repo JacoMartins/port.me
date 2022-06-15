@@ -1,25 +1,26 @@
-import { useContext, useEffect, useState } from "react"
+import { EventHandler, useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from "../../services/api";
-import { ColumnContainer, GoBackButton, LoadContainer, ProfileContainer, ProfilePicture, Section, SectionContainer, Title } from "./styles";
-import { ArrowLeft, At, CircleNotch, Cookie, Cursor, InstagramLogo, Keyboard, Trash, User, WhatsappLogo } from 'phosphor-react';
-import { IconButton } from "../../components/IconButton";
-import { IconButtonContainer } from "../../components/IconButton/styles";
+import { ColumnContainer, GoBackButton, LoadContainer, ProfileContainer, ProfilePicture } from "./styles";
+import { ArrowLeft, At, CircleNotch, Cookie, Cursor, InstagramLogo, Keyboard, PaperPlaneRight, Pencil, Plus, Target, Trash, User, WhatsappLogo } from 'phosphor-react';
+import { IconButton } from "../../components/Information/IconButton";
+import { IconButtonContainer } from "../../components/Information/IconButton/styles";
 import { P600, P850, TransparentButton } from "../../global";
-import { BlockHeader } from "../../components/BlockHeader";
-import { IconTextContainer } from "../../components/IconText/styles";
-import { IconText } from "../../components/IconText";
-import { InfoGraphic } from "../../components/InfoGraphic";
-import { InfoGraphicContainer } from "../../components/InfoGraphic/styles";
-import { FrameContainer } from "../../components/Frame/styles";
-import { Frame } from "../../components/Frame";
-import { Header } from "../../components/Header";
+import { BlockHeader } from "../../components/Information/BlockHeader";
+import { IconTextContainer } from "../../components/Information/IconText/styles";
+import { IconText } from "../../components/Information/IconText";
+import { InfoGraphic } from "../../components/Information/InfoGraphic";
+import { InfoGraphicContainer } from "../../components/Information/InfoGraphic/styles";
+import { FrameContainer } from "../../components/Information/Frame/styles";
+import { Frame } from "../../components/Information/Frame";
+import { Header } from "../../components/Base/Header";
 import NotFound from "../NotFound";
-import { Add } from "../../components/Add";
-import Modal from 'react-modal';
-import { NewSection } from "../../components/NewSection";
+import { Add } from "../../components/Base/Add";
+import { NewSection } from "../../components/Modal/NewSection";
 import { AuthContext } from "../../contexts/AuthContext";
-import { AxiosRequestConfig } from "axios";
+import { Section } from "../../components/Base/Section";
+import { SectionController } from "../../components/Controller/SectionController";
+import { ProfileHeader } from "../../components/Base/ProfileHeader";
 
 interface Profile {
   username?: string;
@@ -31,11 +32,7 @@ interface Profile {
   profile_picture?: string;
   profile_cover?: string;
   error?: string;
-}
-
-interface Section {
-  id: string;
-  title: string;
+  id?: string;
 }
 
 export default function Profile() {
@@ -43,7 +40,6 @@ export default function Profile() {
   const { username } = useParams();
 
   const [profile, setProfile] = useState<Profile>({});
-  const [sections, setSections] = useState([]);
   const [isDataReady, setIsDataReady] = useState(false);
   const [status, setStatus] = useState(102);
 
@@ -62,19 +58,11 @@ export default function Profile() {
             setStatus(200);
             setIsDataReady(true);
           });
-
-        await api.get(`/sections?username=${username}`)
-          .then(res => {
-            setSections(res.data);
-            setStatus(200);
-            setIsDataReady(true);
-          });
+          
       } catch (GET) {
         setStatus(404);
         return;
       }
-
-      console.log(profile);
     };
 
     fetch();
@@ -94,75 +82,15 @@ export default function Profile() {
     setIsNewSectionModalOpen(false);
   }
 
-  async function handleDeleteSection(id: string) {
-    event?.preventDefault();
-
-    await api.delete('/section', {
-      data: {
-        id
-      }
-    });
-
-    navigate(`/profile/${username}`); navigate(0);
-  }
-
   return (
     <main>
-      <NewSection isOpen={isNewSectionModalOpen} onRequestClose={handleCloseNewSectionModal} />
+      <NewSection isOpen={isNewSectionModalOpen} onRequestClose={handleCloseNewSectionModal} id={profile.id} />
       <Header showBackButton={true} showLogo={true} />
-      <ProfileContainer id="ProfileContainer" src={profile.profile_cover}>
-        <div className="MainContainer">
-          {
-            isDataReady ?
-              <>
-                <div className="TextContainer">
-                  <h1>
-                    {`${profile.greeting} `}
-                    <span>{profile.first_name} {profile.last_name}</span>
-                  </h1>
+      
+      <ProfileHeader username={username} />
 
-                  <p>{profile.description}</p>
+      <SectionController username={username} profile={profile} />
 
-                  <button type="button">Entrar em Contato</button>
-
-                  {isItMyAccount ?
-                    <TransparentButton type="button" onClick={() => navigate('/edit')}>Editar perfil</TransparentButton>
-                    : null}
-                </div>
-
-                <ProfilePicture src={profile.profile_picture}>
-                  <User size={128} />
-                </ProfilePicture>
-              </>
-              :
-              <CircleNotch size={32} className="load" />
-          }
-        </div>
-      </ProfileContainer>
-
-      {
-        isDataReady ?
-          sections.map((section: Section) => (
-            <Section key={section.id}>
-              <SectionContainer>
-                <div className="MainContainer">
-                  {isItMyAccount ?
-                    <button type="button" onClick={() => handleDeleteSection(section.id)}><Trash size={16} weight='bold' /></button>
-                  : null}
-                  <Title>
-                    {section.title}
-                  </Title>
-
-                  <h2>Seções</h2>
-                </div>
-              </SectionContainer>
-            </Section>
-          ))
-          :
-          <LoadContainer>
-            <CircleNotch className="load" size={32} />
-          </LoadContainer>
-      }
       <Add openNewSectionModal={handleOpenNewSectionModal} />
     </main>
   )

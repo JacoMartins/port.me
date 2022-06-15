@@ -25,6 +25,7 @@ type AuthProviderProps = {
 type Account = {
   username: string;
   email: string;
+  profile_picture: string;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -84,7 +85,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function signOut(){
-    console.log('alo');
     setAccount(undefined);
     cookies.remove('token', {
       path: '/'

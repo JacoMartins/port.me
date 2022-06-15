@@ -4,41 +4,6 @@ interface ProfilePictureProps {
   src?: string;
 }
 
-export const Section = styled.section`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-top: solid 2px rgba(255,255,255, 0.08);
-  padding: 2.5rem 2.5rem;
-  text-align: center;
-`;
-
-export const SectionContainer = styled.div`
-  width: auto;
-  max-width: 720px;
-
-  .MainContainer {
-    button {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      right: 1rem;
-      transform: translateY(-1.5rem);
-    }
-  }
-    
-  @media screen and (max-width: 720px){
-    flex-direction: column-reverse;
-    width: auto;
-    text-align: center;
-  }
-`;
-
-export const Title = styled.h1`
-  margin-bottom: 1.5rem;
-`;
-
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -69,7 +34,7 @@ export const ProfileContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 720px;
-    z-index: 2;
+    z-index: 0;
     
     @media screen and (max-width: 720px){
       flex-direction: column-reverse;
@@ -113,7 +78,7 @@ export const ProfilePicture = styled.div`
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
   border-radius: 20rem;
-  border: ${(props: ProfilePictureProps) => props.src? 'none' : 'solid 2px var(--white-850)'};
+  border: ${(props: ProfilePictureProps) => props.src ? 'none' : 'solid 2px var(--white-850)'};
 
   @media screen and (max-width: 720px){
     height: 14rem;
@@ -121,7 +86,7 @@ export const ProfilePicture = styled.div`
   }
 
   svg {
-    display: ${(props: ProfilePictureProps) => props.src? 'none' : 'block'};
+    display: ${(props: ProfilePictureProps) => props.src ? 'none' : 'block'};
   }
 `;
 

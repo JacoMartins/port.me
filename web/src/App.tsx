@@ -1,11 +1,8 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Modal from 'react-modal';
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { Add } from './components/Add';
-import { Header } from './components/Header';
-import { AuthProvider } from './contexts/AuthContext';
+import { useNavigate } from "react-router-dom";
+import { Header } from './components/Base/Header';
 import { Main } from './home_style';
-import { api } from './services/api';
 
 Modal.setAppElement('#root');
 

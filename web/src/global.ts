@@ -77,7 +77,7 @@ export const GlobalStyle = createGlobalStyle`
     transition: 0.2s;
 
     @media screen and (max-width: 30.3125rem) {
-      font-size: calc(1rem + 0.125rem);      
+      font-size: calc(1rem + 0.125rem);     
     }
 
     &:hover {
@@ -109,6 +109,11 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     padding: 0.5rem 0.5rem;
     transition: 0.15s ease-in;
+
+    @media screen and (max-width: 30.3125rem) {
+      font-size: calc(var(--h1-font-size) + 0.125rem);   
+      padding: 0.75rem 0.5rem;   
+    }
 
     &:focus{
       border: 1px solid var(--dark-mode-blue-600);     
@@ -188,6 +193,26 @@ export const GlobalStyle = createGlobalStyle`
       transform: rotate(360deg);
     }
   }
+  
+  @keyframes open {
+    0% {
+      transform: scale(90%);
+    }
+
+    100%{
+      transform: scale(100%);
+    }
+  }
+
+  @keyframes open-mobile {
+    0% {
+      transform: translate(0, 6rem);
+    }
+
+    100%{
+      transform: translate(0, 0);
+    }
+  }
 
   .react-modal-overlay {
     background-color: rgba(0, 0, 0, 0.5);
@@ -202,20 +227,31 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: center;
     z-index: 999;
-  }
 
+  }
+  
   .react-modal-content {
-    width: 100%;
+    width: auto;
     max-width: 576px;
     background: var(--dark-mode-background);
     padding: 1rem;
     border-radius: 0.25rem;
     z-index: 999;
 
+    animation: open 0.15s ease-out;
+    
     @media screen and (max-width: 720px){
       position: absolute;
       bottom: 0;
-      border-top: solid 2px rgba(255, 255, 255, 0.1)
+      border-top: solid 2px rgba(255, 255, 255, 0.1);
+      width: 100%;
+      animation: open-mobile 0.15s ease-out;
+    }
+
+    button {
+      @media screen and (max-width: 480px) {
+        padding: 0.75rem 0.5rem;
+      }
     }
   }
 
@@ -235,6 +271,7 @@ export const GlobalStyle = createGlobalStyle`
       border: 0;
       background: transparent;
       transition: filter 0.2s;
+      cursor: pointer;
   
       &:hover {
         filter: brightness(0.8);
@@ -258,6 +295,7 @@ export const GlobalStyle = createGlobalStyle`
     -ms-user-select: none;
     user-select: none;
     line-height: 1.75rem;
+
     @media screen and (max-width: 720px) {
       font-size: calc(1rem + 0.125rem);      
     }
@@ -275,6 +313,12 @@ export const GlobalStyle = createGlobalStyle`
       cursor: pointer;
 
       transition: 0.15s;
+
+      @media screen and (max-width: 720px) {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+      }
       
       svg {
         display: none;
@@ -327,6 +371,68 @@ export const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.25);
   }
+
+  .MyComponentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: dashed 2px rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    width: 100%;
+
+    .Header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .ButtonContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 0.25rem;
+      }
+      
+      h2 {
+        margin-left: 0.5rem;
+      }
+
+      input {
+        width: 100%;
+        margin-left: 0rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+        padding: 0.5rem 0.25rem;
+
+        border: solid 1px transparent;
+
+        &:hover{
+          border: solid 1px rgba(255, 255, 255, 0.15);
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+      margin: 0.375rem 0 0 0;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    div + & {
+      margin-top: 1rem;
+    }
+
+    > button{
+      width: auto;
+      height: 2.5rem;
+
+      svg {
+        color: white;
+      }
+    }
+  }
 `;
 
 export const P850 = styled.p`
@@ -357,7 +463,8 @@ export const TransparentButton = styled.button`
   }
 
   &:hover {
-    filter: brightness(0.8);
+    background: rgba(255, 255, 255, 0.08);
+    filter: brightness(1);
   }
 
   &:active{

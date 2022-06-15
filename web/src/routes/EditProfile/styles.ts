@@ -54,6 +54,12 @@ export const Container = styled.div`
           margin-right: 0.25rem;
         }
       }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     @media screen and (max-width: 720px){
@@ -94,6 +100,8 @@ export const ProfileContainer = styled.div`
   background-image: url(${({ src }: ProfilePictureProps) => src});
   background-color: rgba(100, 100, 100, 1);
   background-blend-mode: multiply;
+  background-position: center;
+  background-size: cover;
   border-radius: 0.5rem;
   
   @media screen and (max-width: 720px) {

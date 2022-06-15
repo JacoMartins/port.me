@@ -4,7 +4,6 @@ import { ArrowLeft, Check, CircleNotch } from 'phosphor-react';
 import { GoBackButton } from "../Profile/styles";
 import { P850 } from "../../global";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../services/api";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
@@ -33,7 +32,7 @@ export default function Login() {
     signIn(data).then();
   }
 
-  if (status === 201) {window.location.href = `/profile/${identificator}`}
+  if (status === 201) {window.location.href = `/profile/${account?.username}`}
 
   return (
     <>
@@ -41,7 +40,7 @@ export default function Login() {
         <GoBackButton onClick={() => { navigate(-1) }}><ArrowLeft size={24} /></GoBackButton>
 
         <div className='LogoContainer'>
-          <h1>port<span>me</span></h1>
+          <h1>port<span>.me</span></h1>
         </div>
 
         <div className='Container'>

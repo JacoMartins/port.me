@@ -78,7 +78,7 @@ export default function CreateAccount() {
         <GoBackButton onClick={() => { navigate(-1) }}><ArrowLeft size={24} /></GoBackButton>
 
         <div className='LogoContainer'>
-          <h1>port<span>me</span></h1>
+          <h1>port<span>.me</span></h1>
         </div>
 
         <div className='Container'>
