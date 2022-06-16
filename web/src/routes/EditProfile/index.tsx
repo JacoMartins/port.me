@@ -78,7 +78,11 @@ export default function EditProfile() {
     await fetch('https://api.imgur.com/3/upload', {
       method: 'post',
       headers: {
-        Authorization: 'Client-ID 3c016746c0b64f0'
+        Authorization: 'Client-ID 3c016746c0b64f0',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+        'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
       },
       body: formData
     }).then(
