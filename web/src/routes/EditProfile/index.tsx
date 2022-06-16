@@ -78,12 +78,17 @@ export default function EditProfile() {
     await fetch('https://api.imgur.com/3/upload', {
       method: 'post',
       headers: {
-        Authorization: 'Client-ID 3c016746c0b64f0'
+        Authorization: 'Client-ID 3c016746c0b64f0',
+        "Content-Type": "multipart/form-data"
       },
       body: formData
     }).then(
-      res=> console.log(res.json())
+      res=> res.json()
     )
+
+    .then(
+      res=> console.log(res)
+    );
 
     await api.put('/profile', {
       first_name: firstName,
