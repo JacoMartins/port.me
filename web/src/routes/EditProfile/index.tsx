@@ -75,7 +75,20 @@ export default function EditProfile() {
     const formData = new FormData();
     formData.append("image", profilePicture as File);
 
-    
+    await fetch('https://api.imgur.com/3/upload', {
+      method: 'post',
+      headers: {
+        Authorization: 'Client-ID 3c016746c0b64f0',
+        mode: 'no-cors'
+      },
+      body: formData
+    }).then(
+      res=> res.json()
+    )
+
+    .then(
+      res=> console.log(res)
+    )
 
     await api.put('/profile', {
       first_name: firstName,
