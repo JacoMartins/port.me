@@ -32,7 +32,7 @@ export default function EditProfile() {
   const [lastName, setLastName] = useState('');
   const [greeting, setGreeting] = useState('');
   const [description, setDescription] = useState('');
-  const [profilePicture, setProfilePicture] = useState<File>();
+  const [profilePicture, setProfilePicture] = useState<File | null | undefined>();
   const [profileCover, setProfileCover] = useState('');
   const [isSendingData, setIsSendingData] = useState(false);
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ export default function EditProfile() {
     setIsSendingData(true);
 
     const formData = new FormData();
-    formData.append("image", profilePicture);
+    formData.append("image", profilePicture as File);
 
     await fetch('https://api.imgur.com/3/upload', {
       method: 'post',
@@ -119,10 +119,10 @@ export default function EditProfile() {
                   <h1>{greeting} <span>{firstName} {lastName}</span></h1>
                   <P600>{description}</P600>
                 </div>
-                <ProfilePicture src={profilePicture}>
+                <ProfilePicture src={profilePicture as any}>
                   <User size={128} weight='regular' />
                   <button>
-                    <input type="file" onChange={event => setProfilePicture(event.target.files[0])} />
+                    <input type="file" onChange={event => setProfilePicture(event.target.files![0])} />
                   </button>
                 </ ProfilePicture>
               </div>
@@ -143,7 +143,7 @@ export default function EditProfile() {
               <hr></hr>
 
               <div className="Pictures">
-                <input type='text' placeholder='Foto de perfil (Em desenvolvimento)' defaultValue={profilePicture} onChange={(event) => setProfilePicture(event.target.value)} />
+                <input type='text' placeholder='Foto de perfil (Em desenvolvimento)' defaultValue={profilePicture as string | undefined} onChange={(event) => setProfilePicture(event.target.value as any)} />
                 <input type='text' placeholder='Foto de capa (Em desenvolvimento)' defaultValue={profileCover} onChange={(event) => setProfileCover(event.target.value)} />
               </div>
 
