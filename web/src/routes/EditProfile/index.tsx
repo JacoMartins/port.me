@@ -78,8 +78,7 @@ export default function EditProfile() {
     await fetch('https://api.imgur.com/3/upload', {
       method: 'post',
       headers: {
-        Authorization: 'Client-ID 3c016746c0b64f0',
-        "Content-Type": "multipart/form-data"
+        Authorization: 'Client-ID 3c016746c0b64f0'
       },
       body: formData
     }).then(
