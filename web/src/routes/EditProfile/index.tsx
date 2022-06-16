@@ -82,11 +82,7 @@ export default function EditProfile() {
       },
       body: formData
     }).then(
-      res=> res.json()
-    )
-
-    .then(
-      res=> console.log(res)
+      res=> console.log(res.json())
     )
 
     await api.put('/profile', {
