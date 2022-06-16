@@ -82,8 +82,13 @@ export const ProfilePicture = styled.div`
   min-width: 14rem;
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
+  background-position: center;
   border-radius: 20rem;
   border: ${(props: ProfilePictureProps) => props.src ? 'none' : 'solid 2px var(--white-850)'};
+
+  button {
+    
+  }
 
   @media screen and (max-width: 720px){
     height: 14rem;
