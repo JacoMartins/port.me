@@ -72,22 +72,6 @@ export default function EditProfile() {
     event?.preventDefault();
     setIsSendingData(true);
 
-    const formData = new FormData();
-    formData.append("image", profilePicture as File);
-
-    await fetch('https://api.imgur.com/3/upload', {
-      method: 'post',
-      headers: {
-        Authorization: 'Client-ID 3c016746c0b64f0'
-      }
-    }).then(
-      res=> res.json()
-    )
-
-    .then(
-      res=> console.log(res)
-    )
-
     await api.put('/profile', {
       first_name: firstName,
       last_name: lastName,
@@ -98,8 +82,8 @@ export default function EditProfile() {
     })
 
     setIsSendingData(false);
-    // navigate(`/profile/${profile.username}`);
-    // navigate(0);
+    navigate(`/profile/${profile.username}`);
+    navigate(0);
   }
 
   return (
@@ -120,9 +104,6 @@ export default function EditProfile() {
                 </div>
                 <ProfilePicture src={profilePicture as any}>
                   <User size={128} weight='regular' />
-                  <button>
-                    <input type="file" onChange={event => setProfilePicture(event.target.files![0])} />
-                  </button>
                 </ ProfilePicture>
               </div>
 
