@@ -80,7 +80,8 @@ export default function EditProfile() {
       headers: {
         Authorization: 'Client-ID 3c016746c0b64f0'
       },
-      mode: 'no-cors',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
       body: formData
     }).then(
       res=> res.json()
