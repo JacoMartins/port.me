@@ -6,6 +6,7 @@ const cookies = new Cookies();
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
-    Authorization: `Bearer ${cookies.get('refreshToken')}`
+    Authorization: `Bearer ${cookies.get('refreshToken')}`,
+    mode: 'no-cors'
   }
 });
