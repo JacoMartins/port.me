@@ -41,7 +41,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
   useEffect(() => {
     const fetch = async () => {
-      await api.get(`/section/component_items?component_id=${id}`).then(
+      await api.get(`/items?component_id=${id}`).then(
         res => setItems(res.data)
       );
     };
@@ -52,7 +52,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
   async function handleDeleteComponent() {
     setIsDeleting(true);
 
-    await api.delete('/section/components', {
+    await api.delete('/components', {
       data: {
         profile_id,
         id
@@ -144,7 +144,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <P600>{item.description}</P600>
+                      <P600 key={item.id}>{item.description}</P600>
                     )
                   )
                 }
@@ -168,45 +168,55 @@ export function SectionComponentController({ id, profile_id, title, value, type,
               type === 'block_header' &&
               <BlockHeader title={title} description={description}>
                 {
-                  items.map(
-                    item => (
-                      <>
-                        {item.type === 'icon_button' &&
-                          <IconButton
-                            title={item.title}
-                            description={item.description}
-                            icon={<WhatsappLogo weight="light" />}
-                            arrowRight={true}
-                            key={item.id}
-                          />}
+                  items.map(item => {
 
-                        {item.type === 'info_graphic' &&
-                          <InfoGraphic
-                            title={item.title}
-                            percentage={item.value}
-                            key={item.id}
-                          />}
+                    if (item.type === 'icon_button') {
+                      return (
+                        <IconButton
+                          title={item.title}
+                          description={item.description}
+                          icon={<WhatsappLogo weight="light" />}
+                          arrowRight={true}
+                          key={item.id}
+                        />
+                      )
+                    }
 
-                        {
-                          item.type === 'text' &&
-                          <P600>{item.description}</P600>
-                        }
+                    if (item.type === 'info_graphic') {
+                      return (
+                        <InfoGraphic
+                          title={item.title}
+                          percentage={item.value}
+                          key={item.id}
+                        />
+                      )
+                    }
 
-                        {
-                          item.type === 'frame' &&
-                          <FrameContainer>
-                            {
-                              items.map(
-                                item => (
-                                  <Frame key={item.id} src={item.icon} />
-                                )
+                    if (item.type === 'text') {
+                      return (
+                        <P600 key={item.id}>{item.description}</P600>
+                      )
+                    }
+
+                    if (item.type === 'frame') {
+                      return (
+                        <FrameContainer key={item.id}>
+                          {
+                            items.map(
+                              item => (
+                                <Frame key={item.id} src={item.icon} />
                               )
-                            }
-                          </FrameContainer>
-                        }
-                      </>
+                            )
+                          }
+                        </FrameContainer>
+                      )
+                    }
+
+                    return(
+                      <h3>Couldn't identify component.</h3>
                     )
-                  )
+
+                  })
                 }
               </BlockHeader>
             }
@@ -247,30 +257,28 @@ export function SectionComponentController({ id, profile_id, title, value, type,
             {
               type === 'block_header' &&
               <BlockHeader title={title} description={description}>
-                  {
-                    items.map(
-                      item => (
-                        <>
-                          {item.type === 'icon_button' &&
-                            <IconButton
-                              title={item.title}
-                              description={item.description}
-                              icon={<WhatsappLogo weight="light" />}
-                              arrowRight={true}
-                              path={item.path}
-                              key={item.id}
-                            />}
+                {
+                  items.map(
+                    item => (
+                      <div key={item.id}>
+                        {item.type === 'icon_button' &&
+                          <IconButton
+                            title={item.title}
+                            description={item.description}
+                            icon={<WhatsappLogo weight="light" />}
+                            arrowRight={true}
+                            path={item.path}
+                          />}
 
-                          {item.type === 'info_graphic' &&
-                            <InfoGraphic
-                              title={item.title}
-                              percentage={item.value}
-                              key={item.id}
-                            />}
-                        </>
-                      )
+                        {item.type === 'info_graphic' &&
+                          <InfoGraphic
+                            title={item.title}
+                            percentage={item.value}
+                          />}
+                      </div>
                     )
-                  }
+                  )
+                }
               </BlockHeader>
             }
 
@@ -280,7 +288,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <P600>{item.description}</P600>
+                      <P600 key={item.id}>{item.description}</P600>
                     )
                   )
                 }

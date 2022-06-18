@@ -43,7 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token) {
       const fetch = async () => {
-        await api.get(`/me`)
+        await api.get(`/auth/me`)
           .then(res => setAccount(res.data))
       };
 

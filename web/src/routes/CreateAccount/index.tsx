@@ -18,8 +18,6 @@ export default function CreateAccount() {
   const [isSendingData, setIsSendingData] = useState(false);
   const [isAlreadySent, setIsAlreadySent] = useState(false);
 
-  const {signIn} = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +57,7 @@ export default function CreateAccount() {
     event?.preventDefault();
     setIsSendingData(true);
 
-    await api.post('/accounts', {
+    await api.post('/account', {
       first_name: firstName,
       last_name: lastName,
       email,

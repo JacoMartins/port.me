@@ -87,7 +87,50 @@ export const ProfilePicture = styled.div`
   border: ${(props: ProfilePictureProps) => props.src ? 'none' : 'solid 2px var(--white-850)'};
 
   button {
-    
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    margin: 9.5rem 0 0 11rem;
+    overflow: hidden;
+
+    @media screen and (max-width: 720px) {
+      height: 3rem;
+      width: 3rem;
+      margin: 10rem 0 0 12.5rem;
+    }
+
+    svg {
+      min-width: 1.5rem;
+      max-width: 1.5rem;
+      min-height: 1.5rem;
+      max-height: 1.5rem;
+
+      @media screen and (max-width: 720px) {
+        min-width: 1.75rem;
+        max-width: 1.75rem;
+        min-height: 1.75rem;
+        max-height: 1.75rem;
+      }
+    }
+
+    input[type=file]{
+      position: absolute;
+      margin: 0;
+      top: 0;
+      left: 0;
+      height: 3rem;
+      width: 3rem;
+      opacity: 0;
+      cursor: pointer;
+
+      ::-webkit-file-upload-button {
+        display: none;
+      }
+
+    }
   }
 
   @media screen and (max-width: 720px){
@@ -95,10 +138,10 @@ export const ProfilePicture = styled.div`
     width: 16rem;
   }
 
-  svg {
+  > svg {
     display: ${(props: ProfilePictureProps) => props.src ? 'none' : 'block'};
   }
-  `;
+`;
 
 export const ProfileContainer = styled.div`
   padding: 3rem;

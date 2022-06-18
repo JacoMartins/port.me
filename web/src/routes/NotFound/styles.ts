@@ -5,12 +5,19 @@ export const Main = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  width: 100vw;
   
-  a {
+  p {
     position: absolute;
     bottom: 1rem;
-    text-decoration: none;
-    color: var(--dark-mode-text-600);
+    a {
+      text-decoration: none;
+      color: var(--dark-mode-text-600);
+      &:hover{
+        text-decoration: underline;
+      }
+    }
   }
 
   .Container{
@@ -18,19 +25,17 @@ export const Main = styled.main`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: auto;
     height: auto;
     
     img {
-      min-width: 32rem;
-      min-height: 32rem;
-      max-width: 32rem;
-      max-height: 32rem;
+      width: 24rem;
     }
 
-    h1{
+    h2{
       color: var(--dark-mode-text-850);
       text-align: center;
+      max-width: 80%;
     }
 
   }

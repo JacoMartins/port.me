@@ -48,7 +48,7 @@ export function Section({ id, title, profile_id }: SectionProps) {
 
   useEffect(() => {
     const fetch = async () => {
-      await api.get(`/section/components?section_id=${id}`).then(res => {
+      await api.get(`/components?section_id=${id}`).then(res => {
         setComponents(res.data);
         setIsDataReady(true);
       });

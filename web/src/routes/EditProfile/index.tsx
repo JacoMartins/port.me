@@ -1,4 +1,4 @@
-import { CircleNotch, User } from "phosphor-react";
+import { Camera, CircleNotch, User } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Base/Header";
@@ -104,6 +104,10 @@ export default function EditProfile() {
                 </div>
                 <ProfilePicture src={profilePicture as any}>
                   <User size={128} weight='regular' />
+                  <button>
+                    <input type="file" onChange={event => setProfilePicture(event.target.files![0])} />
+                    <Camera size={24} weight='regular' />
+                  </button>
                 </ ProfilePicture>
               </div>
 

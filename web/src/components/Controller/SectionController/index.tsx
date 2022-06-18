@@ -34,17 +34,17 @@ export function SectionController({ username, profile }: SectionControllerProps)
 
   useEffect(() => {
     const fetch = async () => {
-      await api.get(`/sections?username=${username}`)
+      await api.get(`/section/all?username=${username}`)
         .then(res => {
           setSections(res.data);
-          setStatus(200);
-          setIsDataReady(true);
         });
     };
 
     fetch();
+    setStatus(200);
+    setIsDataReady(true);
   }, []);
-  
+
   return (
     <>
       {

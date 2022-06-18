@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface HeaderStylesProps{
   headerType: number;
+  showLogo: boolean;
 }
 
 interface ProfilePictureProps {
@@ -31,7 +32,7 @@ export const HeaderBody = styled.header`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: ${(props:HeaderStylesProps) => props.showLogo ? 'space-between' : 'right'};
 
     .LogoContainer {
       display: flex;
@@ -70,6 +71,7 @@ export const HeaderBody = styled.header`
       display: flex;
       flex-direction: row;
       gap: 0.5rem;
+      
     }
   }
 `;
@@ -125,6 +127,7 @@ export const ProfilePicture = styled.div`
   width: 2rem;
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
+  background-position: center;
   border-radius: 20rem;
   border: ${(props: ProfilePictureProps) => props.src? 'none' : 'none'};
 
