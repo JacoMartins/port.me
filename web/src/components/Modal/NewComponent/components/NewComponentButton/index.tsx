@@ -26,7 +26,7 @@ export function NewComponentButton({ title, description, component, section_id, 
 
     setIsSendingData(true);
 
-    await api.post('/section/components', {
+    await api.post('/components', {
       profile_id,
       section_id,
       title,

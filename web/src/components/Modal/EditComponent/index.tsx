@@ -39,7 +39,7 @@ export function EditComponent({ isOpen, onRequestClose, profile_id, id, componen
 
     setIsSendingData(true);
 
-    await api.put('/section/components', {
+    await api.put('/components', {
       profile_id,
       id,
       title,

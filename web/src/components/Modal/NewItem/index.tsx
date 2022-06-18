@@ -30,7 +30,7 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id }: NewComponent
 
     setIsDataSending(true);
 
-    await api.post('/section/component_items', {
+    await api.post('/items', {
       profile_id,
       component_id: id,
       title,
