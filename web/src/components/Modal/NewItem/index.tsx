@@ -92,14 +92,15 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id, component_type
             }
 
             {
-              // <>
-              //   <input type="text" placeholder="Título do item" onChange={event => setTitle(event.target.value)} />
-              //   <input type="text" placeholder="Descrição" onChange={event => setDescription(event.target.value)} />
-              //   <input type="text" placeholder="Valor" onChange={event => setValue(parseInt(event.target.value, 10))} />
-              //   <input type="text" placeholder="Tipo" onChange={event => setType(event.target.value)} />
-              //   <input type="text" placeholder="Ícone" onChange={event => setIcon(event.target.value)} />
-              //   <input type="text" placeholder="Link" onChange={event => setPath(event.target.value)} />
-              // </>
+              component_type === 'block_header' &&
+              <>
+                <input type="text" placeholder="Título do item" onChange={event => setTitle(event.target.value)} />
+                <input type="text" placeholder="Descrição" onChange={event => setDescription(event.target.value)} />
+                <input type="text" placeholder="Valor" onChange={event => setValue(parseInt(event.target.value, 10))} />
+                <input type="text" placeholder="Tipo" onChange={event => setType(event.target.value)} />
+                <input type="text" placeholder="Ícone" onChange={event => setIcon(event.target.value)} />
+                <input type="text" placeholder="Link" onChange={event => setPath(event.target.value)} />
+              </>
             }
 
             {
