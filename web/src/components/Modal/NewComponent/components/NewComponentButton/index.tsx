@@ -60,7 +60,9 @@ export function NewComponentButton({ title, description, component, section_id, 
           component === 'info_graphic' &&
           <InfoGraphic
             title="Andamento do meu curso"
+            description="none"
             percentage={60}
+            handleItemUpdate={() => {}}
           />
         }
 

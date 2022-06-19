@@ -15,6 +15,7 @@ import { EditComponent } from "../../Modal/EditComponent";
 import { NewItem } from "../../Modal/NewItem";
 import { ComponentButton } from "./styles";
 import { ColumnContainer } from "../../Base/Section/styles";
+import { Text } from "../../Information/Text";
 
 interface Component {
   id: string;
@@ -73,7 +74,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
     setEditComponentModalOpen(!editComponentModalOpen)
   }
 
-  function handleItemUpdate(){
+  function handleItemUpdate() {
     setUpdateItems(!updateItems);
   }
 
@@ -153,7 +154,16 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <P600 key={item.id}>{item.description}</P600>
+                      <Text
+                        key={item.id}
+                        isItMyAccount={isItMyAccount}
+                        id={item.id}
+                        title={item.title}
+                        profile_id={profile_id}
+                        handleItemUpdate={handleItemUpdate}
+                      >
+                        {item.description}
+                      </Text>
                     )
                   )
                 }
@@ -166,7 +176,16 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <InfoGraphic key={item.id} title={item.title} percentage={item.value} />
+                      <InfoGraphic
+                        key={item.id}
+                        title={item.title}
+                        description={item.description}
+                        percentage={item.value}
+                        isItMyAccount={isItMyAccount}
+                        id={item.id}
+                        profile_id={profile_id}
+                        handleItemUpdate={handleItemUpdate}
+                      />
                     )
                   )
                 }
@@ -195,8 +214,13 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                       return (
                         <InfoGraphic
                           title={item.title}
+                          description={item.description}
                           percentage={item.value}
                           key={item.id}
+                          isItMyAccount={isItMyAccount}
+                          id={item.id}
+                          profile_id={profile_id}
+                          handleItemUpdate={handleItemUpdate}
                         />
                       )
                     }
@@ -256,7 +280,13 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <InfoGraphic key={item.id} title={item.title} percentage={item.value} />
+                      <InfoGraphic
+                        key={item.id}
+                        title={item.title}
+                        description={item.description}
+                        percentage={item.value}
+                        handleItemUpdate={handleItemUpdate}
+                      />
                     )
                   )
                 }
@@ -282,7 +312,9 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         {item.type === 'info_graphic' &&
                           <InfoGraphic
                             title={item.title}
+                            description={item.description}
                             percentage={item.value}
+                            handleItemUpdate={handleItemUpdate}
                           />}
                       </div>
                     )
