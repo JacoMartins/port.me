@@ -7,7 +7,7 @@ export const Div = styled.div`
 export const Container = styled.form`
   background: var(--dark-mode-background);
   height: auto;
-  width: 20rem;
+  width: auto;
 
   .MainContainer {
     display: flex;
@@ -16,6 +16,7 @@ export const Container = styled.form`
 
     textarea{
       height: 8rem;
+      min-width: 20rem;
     }
   }
 

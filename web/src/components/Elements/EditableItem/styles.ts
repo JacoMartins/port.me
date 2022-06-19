@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Main = styled.div`
   height: auto;
-  width: auto;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -16,6 +16,10 @@ export const Main = styled.div`
   
   &:hover{
     background: rgba(255, 255, 255, 0.06);
+  }
+
+  p {
+    margin: 0;
   }
 `;
 
@@ -32,9 +36,9 @@ export const ShowActionBallon = styled.div`
   border-radius: 0.375rem;
   padding: 0.25rem;
 
-  animation: open 0.15s ease-out forwards;
+  animation: openActionBallon 0.15s ease-out forwards;
 
-  @keyframes open {
+  @keyframes openActionBallon {
     0%{
       transform: scale(0.98) translate(0 , -0.25rem);
       opacity: 0.8;

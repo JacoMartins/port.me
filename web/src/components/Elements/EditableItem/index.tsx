@@ -24,7 +24,7 @@ export function EditableComponent({ children, id, profile_id, handleItemUpdate, 
 
     setTimeout(() => {
       setShowActions(false);
-    }, 3000)
+    }, 4000)
   }
 
   function handleCloseEditingItemModal() {
