@@ -21,3 +21,11 @@ export const ComponentButton = styled.button`
     filter: brightness(1);
   }
 `;
+
+export const P600 = styled.p`
+  &:first-child {
+    margin-top: 0.5rem;
+  }
+
+  color: rgba(255, 255, 255, 0.6);
+`;

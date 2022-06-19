@@ -10,10 +10,11 @@ import { Container, Div } from "./styles";
 interface NewSectionProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  handleSectionUpdate: () => void;
   id?: string;
 }
 
-export function NewSection({ isOpen, onRequestClose, id }: NewSectionProps) {
+export function NewSection({ isOpen, onRequestClose, id, handleSectionUpdate }: NewSectionProps) {
   const [title, setTitle] = useState('');
   const { account } = useContext(AuthContext);
   const [isSendingData, setIsSendingData] = useState(false);
@@ -33,7 +34,8 @@ export function NewSection({ isOpen, onRequestClose, id }: NewSectionProps) {
 
     setIsSendingData(false);
 
-    navigate(0);
+    handleSectionUpdate();
+    onRequestClose();
   }
 
   return (

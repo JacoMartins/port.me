@@ -6,20 +6,24 @@ import { P600 } from "../../../global";
 import { api } from "../../../services/api";
 import { Container, Div } from "./styles";
 
-interface NewComponentProps {
+interface NewItemProps {
   isOpen: boolean;
   onRequestClose: () => void;
   id?: string;
   profile_id?: string;
+  component_type?: string;
+  handleItemUpdate: () => void;
 }
 
-export function NewItem({ isOpen, onRequestClose, id, profile_id }: NewComponentProps) {
-  const navigate = useNavigate();
-
-  const [title, setTitle] = useState('');
+export function NewItem({ isOpen, onRequestClose, id, profile_id, component_type, handleItemUpdate }: NewItemProps) {
+  const [title, setTitle] = useState(
+    component_type === 'text' ? 'Text' : ''
+  );
   const [description, setDescription] = useState('');
   const [value, setValue] = useState(0);
-  const [type, setType] = useState('');
+  const [type, setType] = useState(
+    component_type === 'icon_button' ? component_type : ''
+  );
   const [icon, setIcon] = useState('');
   const [path, setPath] = useState('');
 
@@ -42,7 +46,8 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id }: NewComponent
     });
 
     setIsDataSending(false)
-    navigate(0);
+    handleItemUpdate();
+    onRequestClose();
   }
 
   return (
@@ -59,15 +64,43 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id }: NewComponent
             <X className="react-modal-close" size={24} onClick={onRequestClose} />
           </div>
 
-          <P600>Insira os dados necessários</P600>
+          <P600>
+            {component_type === 'text' && 'Escreva algo sobre você...'}
+            {component_type === 'icon_button' && 'Insira as informações necessárias.'}
+          </P600>
 
           <div className="MainContainer">
-            <input type="text" placeholder="Título do item" onChange={event => setTitle(event.target.value)} />
-            <input type="text" placeholder="Descrição" onChange={event => setDescription(event.target.value)} />
-            <input type="text" placeholder="Valor" onChange={event => setValue(parseInt(event.target.value, 10))} />
-            <input type="text" placeholder="Tipo" onChange={event => setType(event.target.value)} />
-            <input type="text" placeholder="Ícone" onChange={event => setIcon(event.target.value)} />
-            <input type="text" placeholder="Link" onChange={event => setPath(event.target.value)} />
+            {
+              component_type === 'icon_button' &&
+              (
+                <>
+                  <input type="text" placeholder="Título" onChange={event => setTitle(event.target.value)} />
+                  <input type="text" placeholder="Descrição" onChange={event => setDescription(event.target.value)} />
+                  <input type="text" placeholder="Ícone" onChange={event => setIcon(event.target.value)} />
+                  <input type="text" placeholder="Link" onChange={event => setPath(event.target.value)} />
+                </>
+              )
+            }
+
+            {
+              component_type === 'text' &&
+              (
+                <>
+                  <textarea placeholder="Texto" onChange={event => setDescription(event.target.value)} />
+                </>
+              )
+            }
+
+            {
+              // <>
+              //   <input type="text" placeholder="Título do item" onChange={event => setTitle(event.target.value)} />
+              //   <input type="text" placeholder="Descrição" onChange={event => setDescription(event.target.value)} />
+              //   <input type="text" placeholder="Valor" onChange={event => setValue(parseInt(event.target.value, 10))} />
+              //   <input type="text" placeholder="Tipo" onChange={event => setType(event.target.value)} />
+              //   <input type="text" placeholder="Ícone" onChange={event => setIcon(event.target.value)} />
+              //   <input type="text" placeholder="Link" onChange={event => setPath(event.target.value)} />
+              // </>
+            }
 
             {
               isDataSending ?

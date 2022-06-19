@@ -13,6 +13,7 @@ interface SectionProps {
   id: string;
   title: string;
   profile_id?: string;
+  handleSectionUpdate: () => void;
 }
 
 interface Section {
@@ -27,12 +28,12 @@ interface Component {
   value: number;
   type: string;
   description: string;
+
 }
 
-export function Section({ id, title, profile_id }: SectionProps) {
+export function Section({ id, title, profile_id, handleSectionUpdate }: SectionProps) {
   const { username } = useParams();
   const { account } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const [components, setComponents] = useState<Component[]>([]);
 
@@ -46,6 +47,8 @@ export function Section({ id, title, profile_id }: SectionProps) {
 
   const [isNewComponentModalOpen, setIsNewComponentModalOpen] = useState(false);
 
+  const [updateComponents, setUpdateComponents] = useState(false);
+
   useEffect(() => {
     const fetch = async () => {
       await api.get(`/components?section_id=${id}`).then(res => {
@@ -55,7 +58,7 @@ export function Section({ id, title, profile_id }: SectionProps) {
     };
 
     fetch();
-  }, []);
+  }, [updateComponents]);
 
   async function handleDeleteSection(id: string) {
     event?.preventDefault();
@@ -71,7 +74,7 @@ export function Section({ id, title, profile_id }: SectionProps) {
 
     setIsDeleting(false);
 
-    navigate(0);
+    handleSectionUpdate();
   }
 
   async function handleUpdateSection({ id, title }: Section) {
@@ -98,9 +101,13 @@ export function Section({ id, title, profile_id }: SectionProps) {
     setIsNewComponentModalOpen(false);
   }
 
+  function handleComponentsUpdate(){
+    setUpdateComponents(!updateComponents);
+  }
+
   return (
     <Main>
-      <NewComponent isOpen={isNewComponentModalOpen} onRequestClose={handleCloseModal} id={id} profile_id={profile_id} />
+      <NewComponent isOpen={isNewComponentModalOpen} onRequestClose={handleCloseModal} id={id} profile_id={profile_id} handleComponentsUpdate={handleComponentsUpdate} />
       <SectionContainer>
 
         {
@@ -169,6 +176,7 @@ export function Section({ id, title, profile_id }: SectionProps) {
                       value={0}
                       key={component.id}
                       profile_id={profile_id}
+                      handleComponentsUpdate={handleComponentsUpdate}
                     />
                   ))
                   :
@@ -191,6 +199,7 @@ export function Section({ id, title, profile_id }: SectionProps) {
                       value={0}
                       key={component.id}
                       profile_id={profile_id}
+                      handleComponentsUpdate={handleComponentsUpdate}
                     />
                   ))
                   :

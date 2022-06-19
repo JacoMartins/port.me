@@ -20,23 +20,16 @@ export function Add({ openNewSectionModal }: AddProps) {
   }
 
   return (
-    isMyProfile ? <Div showActions={showActions}>
-      {
-        showActions ?
-          <>
-            <button type="button" onClick={showActionsHandle} title="Fechar opções">
-              <X size={24} weight={'bold'} />
-            </button>
+    isMyProfile ?
+    
+    <Div showActions={showActions}>
+      <button type="button" onClick={openNewSectionModal}>
+        <Plus size={24} weight="bold" />
+      </button>
+    </Div>
 
-            <button type="button" onClick={() => { openNewSectionModal(); showActionsHandle(); }} title="Fazer um post">
-              <NotePencil size={24} weight={'bold'} />
-            </button>
-          </>
-          :
-          <button type="button" onClick={showActionsHandle}>
-            <Plus size={24} weight="bold" />
-          </button>
-      }
-    </Div> : null
+    :
+
+    null
   )
 }

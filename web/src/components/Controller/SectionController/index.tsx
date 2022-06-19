@@ -7,6 +7,9 @@ import { LoadContainer } from "../../Base/Section/styles";
 interface SectionControllerProps {
   username?: string;
   profile: Profile;
+  
+  handleSectionUpdate: () => void;
+  updateSection: boolean;
 }
 
 interface Section {
@@ -27,7 +30,7 @@ interface Profile {
   id?: string;
 }
 
-export function SectionController({ username, profile }: SectionControllerProps) {
+export function SectionController({ username, profile, handleSectionUpdate, updateSection }: SectionControllerProps) {
   const [isDataReady, setIsDataReady] = useState(false);
   const [status, setStatus] = useState(102);
   const [sections, setSections] = useState<Section[]>([]);
@@ -43,14 +46,14 @@ export function SectionController({ username, profile }: SectionControllerProps)
     fetch();
     setStatus(200);
     setIsDataReady(true);
-  }, []);
+  }, [updateSection]);
 
   return (
     <>
       {
         isDataReady ?
           sections?.map((section: Section) => (
-            <Section key={section.id} id={section.id} title={section.title} profile_id={profile.id} />
+            <Section key={section.id} id={section.id} title={section.title} profile_id={profile.id} handleSectionUpdate={handleSectionUpdate} />
           ))
 
           :

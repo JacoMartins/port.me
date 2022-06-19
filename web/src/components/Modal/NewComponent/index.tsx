@@ -9,9 +9,10 @@ interface NewComponentProps {
   onRequestClose: () => void;
   id?: string;
   profile_id?: string;
+  handleComponentsUpdate: () => void;
 }
 
-export function NewComponent({ isOpen, onRequestClose, id, profile_id }: NewComponentProps) {
+export function NewComponent({ isOpen, onRequestClose, id, profile_id, handleComponentsUpdate }: NewComponentProps) {
   return (
     <Div>
       <Modal
@@ -35,6 +36,9 @@ export function NewComponent({ isOpen, onRequestClose, id, profile_id }: NewComp
               component="icon_button"
               section_id={id}
               profile_id={profile_id}
+
+              handleComponentsUpdate={handleComponentsUpdate}
+              onRequestClose={onRequestClose}
             />
 
             <NewComponentButton
@@ -43,6 +47,9 @@ export function NewComponent({ isOpen, onRequestClose, id, profile_id }: NewComp
               component="info_graphic"
               section_id={id}
               profile_id={profile_id}
+
+              handleComponentsUpdate={handleComponentsUpdate}
+              onRequestClose={onRequestClose}
             />
 
             <NewComponentButton
@@ -51,14 +58,20 @@ export function NewComponent({ isOpen, onRequestClose, id, profile_id }: NewComp
               component="block_header"
               section_id={id}
               profile_id={profile_id}
+
+              handleComponentsUpdate={handleComponentsUpdate}
+              onRequestClose={onRequestClose}
             />
 
             <NewComponentButton
-              title="Paragráfo"
-              description="Texto e informação"
+              title="Texto"
+              description="Escrita e informação"
               component="text"
               section_id={id}
               profile_id={profile_id}
+
+              handleComponentsUpdate={handleComponentsUpdate}
+              onRequestClose={onRequestClose}
             />
 
             <NewComponentButton
@@ -67,6 +80,9 @@ export function NewComponent({ isOpen, onRequestClose, id, profile_id }: NewComp
               component="frame"
               section_id={id}
               profile_id={profile_id}
+
+              handleComponentsUpdate={handleComponentsUpdate}
+              onRequestClose={onRequestClose}
             />
           </div>
         </Container>

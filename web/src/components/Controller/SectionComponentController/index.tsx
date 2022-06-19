@@ -2,7 +2,7 @@ import { CircleNotch, Cpu, Cursor, PencilSimple, Plus, Trash, WhatsappLogo } fro
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { P600 } from "../../../global";
+import { P600 } from "./styles";
 import { api } from "../../../services/api";
 import { BlockHeader } from "../../Information/BlockHeader";
 import { Frame } from "../../Information/Frame";
@@ -14,6 +14,7 @@ import { InfoGraphicContainer } from "../../Information/InfoGraphic/styles";
 import { EditComponent } from "../../Modal/EditComponent";
 import { NewItem } from "../../Modal/NewItem";
 import { ComponentButton } from "./styles";
+import { ColumnContainer } from "../../Base/Section/styles";
 
 interface Component {
   id: string;
@@ -25,17 +26,17 @@ interface Component {
   description: string;
   icon?: string;
   path?: string;
+  handleComponentsUpdate: () => void;
 }
 
-export function SectionComponentController({ id, profile_id, title, value, type, description }: Component) {
+export function SectionComponentController({ id, profile_id, title, value, type, description, handleComponentsUpdate }: Component) {
   const { username } = useParams();
   const [newItemModalOpen, setNewItemModalOpen] = useState(false);
   const [editComponentModalOpen, setEditComponentModalOpen] = useState(false);
   const { isAuthenticated, account } = useContext(AuthContext);
   const isItMyAccount = username === account?.username;
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const navigate = useNavigate();
+  const [updateItems, setUpdateItems] = useState(false);
 
   const [items, setItems] = useState<Component[]>([]);
 
@@ -47,7 +48,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
     };
 
     fetch();
-  }, [])
+  }, [updateItems])
 
   async function handleDeleteComponent() {
     setIsDeleting(true);
@@ -60,7 +61,8 @@ export function SectionComponentController({ id, profile_id, title, value, type,
     });
 
     setIsDeleting(false);
-    navigate(0);
+
+    handleComponentsUpdate();
   }
 
   function handleNewItemModal() {
@@ -71,6 +73,10 @@ export function SectionComponentController({ id, profile_id, title, value, type,
     setEditComponentModalOpen(!editComponentModalOpen)
   }
 
+  function handleItemUpdate(){
+    setUpdateItems(!updateItems);
+  }
+
   return (
     <>
       <NewItem
@@ -78,6 +84,8 @@ export function SectionComponentController({ id, profile_id, title, value, type,
         isOpen={newItemModalOpen}
         id={id}
         profile_id={profile_id}
+        component_type={type}
+        handleItemUpdate={handleItemUpdate}
       />
 
       <EditComponent
@@ -88,6 +96,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
         component_title={title}
         component_description={description}
         component_type={type}
+        handleComponentsUpdate={handleComponentsUpdate}
       />
 
       {
@@ -140,7 +149,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
             {
               type === 'text' &&
-              <>
+              <ColumnContainer>
                 {
                   items.map(
                     item => (
@@ -148,7 +157,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                     )
                   )
                 }
-              </>
+              </ColumnContainer>
             }
 
             {
@@ -212,7 +221,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                       )
                     }
 
-                    return(
+                    return (
                       <h3>Couldn't identify component.</h3>
                     )
 
@@ -284,7 +293,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
             {
               type === 'text' &&
-              <>
+              <ColumnContainer>
                 {
                   items.map(
                     item => (
@@ -292,7 +301,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                     )
                   )
                 }
-              </>
+              </ColumnContainer>
             }
 
             {

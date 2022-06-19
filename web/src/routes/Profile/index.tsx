@@ -43,7 +43,7 @@ export default function Profile() {
   const [isDataReady, setIsDataReady] = useState(false);
   const [status, setStatus] = useState(102);
 
-  const navigate = useNavigate();
+  const [updateSection, setUpdateSection] = useState(false);
 
   const [isNewSectionModalOpen, setIsNewSectionModalOpen] = useState(false);
 
@@ -82,14 +82,18 @@ export default function Profile() {
     setIsNewSectionModalOpen(false);
   }
 
+  function handleSectionUpdate(){
+    setUpdateSection(!updateSection);
+  }
+
   return (
     <main>
-      <NewSection isOpen={isNewSectionModalOpen} onRequestClose={handleCloseNewSectionModal} id={profile.id} />
+      <NewSection isOpen={isNewSectionModalOpen} onRequestClose={handleCloseNewSectionModal} id={profile.id} handleSectionUpdate={handleSectionUpdate} />
       <Header showBackButton={true} showLogo={true} />
       
       <ProfileHeader username={username} />
 
-      <SectionController username={username} profile={profile} />
+      <SectionController handleSectionUpdate={handleSectionUpdate} updateSection={updateSection} username={username} profile={profile} />
 
       <Add openNewSectionModal={handleOpenNewSectionModal} />
     </main>

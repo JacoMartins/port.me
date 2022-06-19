@@ -15,19 +15,10 @@ interface EditComponentProps {
   component_title?: string;
   component_description?: string;
   component_type?: string;
+  handleComponentsUpdate: () => void;
 }
 
-interface Component {
-  id: string;
-  section_id: string;
-  profile_id?: string;
-  title: string;
-  value: number;
-  type: string;
-  description: string;
-}
-
-export function EditComponent({ isOpen, onRequestClose, profile_id, id, component_title, component_description, component_type }: EditComponentProps) {
+export function EditComponent({ isOpen, onRequestClose, profile_id, id, component_title, component_description, component_type, handleComponentsUpdate }: EditComponentProps) {
   const [title, setTitle] = useState(component_title);
   const [description, setDescription] = useState(component_description);
   const [isSendingData, setIsSendingData] = useState(false);
@@ -50,7 +41,8 @@ export function EditComponent({ isOpen, onRequestClose, profile_id, id, componen
 
     setIsSendingData(false);
 
-    navigate(0);
+    handleComponentsUpdate();
+    onRequestClose();
   }
 
   return (

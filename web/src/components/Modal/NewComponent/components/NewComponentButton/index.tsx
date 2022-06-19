@@ -14,9 +14,11 @@ interface NewComponentButtonProps {
   component: string;
   section_id?: string;
   profile_id?: string;
+  handleComponentsUpdate: () => void;
+  onRequestClose: () => void;
 }
 
-export function NewComponentButton({ title, description, component, section_id, profile_id }: NewComponentButtonProps) {
+export function NewComponentButton({ title, description, component, section_id, profile_id, handleComponentsUpdate, onRequestClose }: NewComponentButtonProps) {
   const [isSendingData, setIsSendingData] = useState(false);
 
   const navigate = useNavigate();
@@ -37,7 +39,8 @@ export function NewComponentButton({ title, description, component, section_id, 
 
     setIsSendingData(false);
 
-    navigate(0);
+    handleComponentsUpdate();
+    onRequestClose();
   }
 
   return (

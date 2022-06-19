@@ -43,6 +43,15 @@ export const Container = styled.form`
     width: 100%;
   }
 
+  textarea {
+    height: 8rem;
+    resize: none;
+
+    @media screen and (max-width: 720px) {
+      font-size: calc(1rem + 0.125rem);
+    }
+  }
+
   button {
     display: flex;
     align-items: center;

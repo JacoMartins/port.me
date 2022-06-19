@@ -344,6 +344,27 @@ export const GlobalStyle = createGlobalStyle`
       opacity: 0;
       cursor: pointer;
     }
+    
+    input[type=radio] {
+      position: absolute;
+      width: 0;
+      height: 0;
+      margin-right: 0.25rem;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    input[type=radio]:checked~div {
+      background: var(--light-mode-blue);
+      border: 0;
+      
+      svg {
+        display: block;
+        color: white;
+        font-weight: 600;
+      }
+    }
+
   }
 
   hr{
