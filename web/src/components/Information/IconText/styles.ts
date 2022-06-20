@@ -14,16 +14,14 @@ export const IconTextContainer = styled.div`
 export const Div = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   height: auto;
   background: transparent;
   outline: 0;
   border: 0;
-  /* border: solid 2px black; */
   justify-content: center;
   padding: 0.75rem;
-  max-width: 23.5rem;
+  width: 23.5rem;
 
   transition: 0.15s ease-out;
 
@@ -34,14 +32,13 @@ export const Div = styled.div`
   .IconText.MainContainer /*Main Container*/ {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     align-items: left;
+    flex-wrap: nowrap;
     text-align: left;
     color: var(--text-dark-half);
-    max-width: 20rem;
-
-    @media screen and (max-width: 30.3125rem) {
-    }
+    width: 20rem;
+    gap: 1.5rem;
 
     svg {
       align-self: center;
@@ -56,9 +53,11 @@ export const Div = styled.div`
       filter: brightness(1);
     }
     
-    .TextCotainer {
+    .TextContainer {
       display: flex;
       flex-direction: column;
+      align-items: left;
+      text-align: left;
       
       h3{ 
         color: var(--dark-mode-text-850);

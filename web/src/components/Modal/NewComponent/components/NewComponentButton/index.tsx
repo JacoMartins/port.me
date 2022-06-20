@@ -6,6 +6,7 @@ import { api } from "../../../../../services/api";
 import { BlockHeader } from "../../../../Information/BlockHeader";
 import { IconButton } from "../../../../Information/IconButton";
 import { InfoGraphic } from "../../../../Information/InfoGraphic";
+import { Text } from "../../../../Information/Text";
 import { Div } from "./styles";
 
 interface NewComponentButtonProps {
@@ -20,8 +21,6 @@ interface NewComponentButtonProps {
 
 export function NewComponentButton({ title, description, component, section_id, profile_id, handleComponentsUpdate, onRequestClose }: NewComponentButtonProps) {
   const [isSendingData, setIsSendingData] = useState(false);
-
-  const navigate = useNavigate();
 
   async function addComponent() {
     event?.preventDefault();
@@ -53,6 +52,9 @@ export function NewComponentButton({ title, description, component, section_id, 
             description="Descrição"
             icon={<Cursor weight="light" />}
             arrowRight={true}
+
+            handleItemUpdate={() => {}}
+            isEditable={false}
           />
         }
 
@@ -63,6 +65,8 @@ export function NewComponentButton({ title, description, component, section_id, 
             description="none"
             percentage={60}
             handleItemUpdate={() => {}}
+
+            isEditable={false}
           />
         }
 
@@ -78,7 +82,9 @@ export function NewComponentButton({ title, description, component, section_id, 
 
         {
           component === 'text' &&
-          <P600>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</P600>
+          <Text title='Demo' isEditable={false} handleItemUpdate={() => {}}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Text>
         }
       </div>
 

@@ -14,12 +14,21 @@ export const Div = styled.div`
   transition: 0.25s;
   color: var(--text-dark);
 
+  @media screen and (max-width: 720px) {
+    width: 18rem;
+  }
+
   .Container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: left;
     text-align: left;
+    width: 14rem;
+
+    @media screen and (max-width: 720px) {
+      width: 16rem;
+    }
   }
 
   &:hover{
@@ -32,7 +41,7 @@ export const Percentage = styled.div`
   flex-direction: column;
   justify-content: left;
   align-items: left;
-  width: 14.5rem;
+  width: 100%;
   height: 0.25rem;
   border-radius: 1rem;
   background: var(--white-250);

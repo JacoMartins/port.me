@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { P600 } from "../../../global";
 import { EditableComponent } from "../../Elements/EditableItem";
 import { Div } from "./styles";
@@ -8,17 +11,22 @@ interface InfoGraphicProps {
   description: string;
   percentage: number;
 
-  isItMyAccount?: boolean;
   id?: string;
   profile_id?: string;
   handleItemUpdate: () => void;
+
+  isEditable: boolean;
 }
 
-export function InfoGraphic({ title, description, percentage, isItMyAccount, id, profile_id, handleItemUpdate }: InfoGraphicProps) {
+export function InfoGraphic({ title, description, percentage, id, profile_id, handleItemUpdate, isEditable }: InfoGraphicProps) {
   const type = 'info_graphic';
+
+  const { account, isAuthenticated } = useContext(AuthContext);
+  const { username } = useParams();
+  const isItMyAccount = account?.username === username;
   
   return (
-    isItMyAccount ?
+    isItMyAccount && isAuthenticated && isEditable ?
       <EditableComponent
         id={id}
         profile_id={profile_id}

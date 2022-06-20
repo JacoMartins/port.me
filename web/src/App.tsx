@@ -27,8 +27,6 @@ function App() {
     (event.target as HTMLInputElement).value? setSearchList(true) : setSearchList(false) ;
   }
 
-
-
   return (
     <>
       <Header showBackButton={false} showLogo={false} />

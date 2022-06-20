@@ -214,6 +214,18 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  @keyframes openActionBallon {
+    0%{
+      transform: scale(0.98) translate(0 , -0.25rem);
+      opacity: 0.8;
+    }
+
+    100%{
+      transform: scale(1) translate(0, 0);
+      opacity: 1;
+    }
+  }
+
   .react-modal-overlay {
     background-color: rgba(0, 0, 0, 0.5);
 

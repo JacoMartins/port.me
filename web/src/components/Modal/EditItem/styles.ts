@@ -17,6 +17,10 @@ export const Container = styled.form`
     textarea{
       height: 8rem;
       min-width: 20rem;
+      
+      @media screen and (max-width: 720px) {
+        font-size: calc(1rem + 0.125rem);
+      }
     }
   }
 

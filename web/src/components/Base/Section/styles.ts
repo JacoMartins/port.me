@@ -75,6 +75,11 @@ export const SectionContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 1rem;
+
+    @media screen and (max-width: 650px) {
+      flex-direction: column;
+      gap: 0rem;
+    }
   }
 
   hr{

@@ -23,6 +23,10 @@ export function EditableComponent({ children, id, profile_id, handleItemUpdate, 
     setShowActions(true);
 
     setTimeout(() => {
+      document.getElementById(`component${id}-ballon`)!.style.animation = 'openActionBallon 0.15s linear forwards reverse';
+    }, 3850);
+
+    setTimeout(() => {
       setShowActions(false);
     }, 4000)
   }
@@ -61,7 +65,7 @@ export function EditableComponent({ children, id, profile_id, handleItemUpdate, 
       <Main onClick={handleShowActions}>
         {
           showActions &&
-          <ShowActionBallon>
+          <ShowActionBallon id={`component${id}-ballon`}>
             <button onClick={() => setIsEditingItemModalOpen(true)}>
               <PencilSimple size={20} />
             </button>

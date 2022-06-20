@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-interface Props {
-}
-
 export const IconButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -18,7 +15,7 @@ export const Button = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 4.24rem;
+  min-height: 4.24rem;
   background: transparent;
   outline: 0;
   border: 0;
@@ -37,10 +34,7 @@ export const Button = styled.button`
     text-align: left;
     color: var(--text-dark-half);
     width: 18rem;
-
-    @media screen and (max-width: 30.3125rem) {
-    }
-
+    
     svg {
       align-self: center;
       

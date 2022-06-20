@@ -23,8 +23,6 @@ export function EditComponent({ isOpen, onRequestClose, profile_id, id, componen
   const [description, setDescription] = useState(component_description);
   const [isSendingData, setIsSendingData] = useState(false);
 
-  const navigate = useNavigate();
-
   async function editComponent() {
     event?.preventDefault();
 

@@ -1,4 +1,4 @@
-import { CircleNotch, Cpu, Cursor, PencilSimple, Plus, Trash, WhatsappLogo } from "phosphor-react";
+import { Article, CircleNotch, CircleWavyCheck, Cpu, Cursor, Envelope, GithubLogo, InstagramLogo, LinkedinLogo, PencilSimple, Phone, Plus, Trash, WhatsappLogo } from "phosphor-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -16,6 +16,8 @@ import { NewItem } from "../../Modal/NewItem";
 import { ComponentButton } from "./styles";
 import { ColumnContainer } from "../../Base/Section/styles";
 import { Text } from "../../Information/Text";
+import { IconTextContainer } from "../../Information/IconText/styles";
+import { IconText } from "../../Information/IconText";
 
 interface Component {
   id: string;
@@ -40,6 +42,17 @@ export function SectionComponentController({ id, profile_id, title, value, type,
   const [updateItems, setUpdateItems] = useState(false);
 
   const [items, setItems] = useState<Component[]>([]);
+
+  const renderIcons = (icon: string | undefined) => (
+    icon === 'InstagramLogo' && <InstagramLogo size={24} weight='light' /> ||
+    icon === 'WhatsappLogo' && <WhatsappLogo size={24} weight='light' /> ||
+    icon === 'GitHubLogo' && <GithubLogo size={24} weight='light' /> ||
+    icon === 'LinkedInLogo' && <LinkedinLogo size={24} weight='light' /> ||
+    icon === 'Phone' && <Phone size={24} weight='light' /> ||
+    icon === 'Email' && <Envelope size={24} weight='light' /> ||
+    icon === 'CircleWavyCheck' && <CircleWavyCheck size={24} weight='light' /> ||
+    icon === 'Article' && <Article size={24} weight='light' />
+  );
 
   useEffect(() => {
     const fetch = async () => {
@@ -122,13 +135,29 @@ export function SectionComponentController({ id, profile_id, title, value, type,
               </div>
             </div>
             <hr></hr>
+
+            {/* !!! EDITABLE COMPONENTS-ITEM RENDERING !!! */}
+            {/* !!! EDITABLE COMPONENTS-ITEM RENDERING !!! */}
+            {/* !!! EDITABLE COMPONENTS-ITEM RENDERING !!! */}
+
             {
               type === 'icon_button' &&
               <IconButtonContainer>
                 {
                   items.map(
                     item => (
-                      <IconButton key={item.id} title={item.title} description={item.description} icon={<Cursor size={24} weight='light' />} arrowRight={true} />
+                      <IconButton
+                        key={item.id}
+                        title={item.title}
+                        description={item.description}
+                        icon={renderIcons(item.icon)}
+                        arrowRight={true}
+                        isEditable={true}
+
+                        id={item.id}
+                        profile_id={profile_id}
+                        handleItemUpdate={handleItemUpdate}
+                      />
                     )
                   )
                 }
@@ -141,7 +170,17 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <Frame key={item.id} src={item.icon} />
+                      <Frame
+                        key={item.id}
+                        src={item.icon}
+                        isEditable={true}
+
+                        id={item.id}
+                        profile_id={profile_id}
+                        isAuthenticated={isAuthenticated}
+                        isItMyAccount={isItMyAccount}
+                        handleItemUpdate={handleItemUpdate}
+                      />
                     )
                   )
                 }
@@ -156,9 +195,10 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                     item => (
                       <Text
                         key={item.id}
-                        isItMyAccount={isItMyAccount}
-                        id={item.id}
                         title={item.title}
+                        isEditable={true}
+
+                        id={item.id}
                         profile_id={profile_id}
                         handleItemUpdate={handleItemUpdate}
                       >
@@ -181,7 +221,8 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         title={item.title}
                         description={item.description}
                         percentage={item.value}
-                        isItMyAccount={isItMyAccount}
+                        isEditable={true}
+
                         id={item.id}
                         profile_id={profile_id}
                         handleItemUpdate={handleItemUpdate}
@@ -193,8 +234,39 @@ export function SectionComponentController({ id, profile_id, title, value, type,
             }
 
             {
+              type === 'icon_text' &&
+              <IconTextContainer>
+                {
+                  items.map(
+                    item => (
+                      <IconText
+                        key={item.id}
+                        title={item.title}
+                        description={item.description}
+                        isEditable={true}
+
+                        icon={renderIcons(item.icon)}
+
+                        id={item.id}
+                        profile_id={profile_id}
+                        handleItemUpdate={handleItemUpdate}
+                      />
+                    )
+                  )
+                }
+              </IconTextContainer>
+            }
+
+            {
               type === 'block_header' &&
-              <BlockHeader title={title} description={description}>
+              /* !!! INSIDE BLOCK HEADER RENDERING !!! */
+              /* !!! INSIDE BLOCK HEADER RENDERING !!! */
+              /* !!! INSIDE BLOCK HEADER RENDERING !!! */
+
+              <BlockHeader
+                title={title}
+                description={description}
+              >
                 {
                   items.map(item => {
 
@@ -203,9 +275,15 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         <IconButton
                           title={item.title}
                           description={item.description}
-                          icon={<WhatsappLogo weight="light" />}
+                          icon={renderIcons(item.icon)}
                           arrowRight={true}
                           key={item.id}
+                          isEditable={true}
+
+                          id={item.id}
+                          profile_id={profile_id}
+
+                          handleItemUpdate={handleItemUpdate}
                         />
                       )
                     }
@@ -217,7 +295,8 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                           description={item.description}
                           percentage={item.value}
                           key={item.id}
-                          isItMyAccount={isItMyAccount}
+                          isEditable={true}
+
                           id={item.id}
                           profile_id={profile_id}
                           handleItemUpdate={handleItemUpdate}
@@ -227,7 +306,16 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
                     if (item.type === 'text') {
                       return (
-                        <P600 key={item.id}>{item.description}</P600>
+                        <Text
+                          key={item.id}
+                          id={item.id}
+                          title={item.title}
+
+                          isEditable={true}
+                          handleItemUpdate={handleItemUpdate}
+                        >
+                          {item.description}
+                        </Text>
                       )
                     }
 
@@ -237,11 +325,43 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                           {
                             items.map(
                               item => (
-                                <Frame key={item.id} src={item.icon} />
+                                <Frame
+                                  key={item.id}
+                                  src={item.icon}
+                                  alt={item.description}
+                                  isEditable={true}
+
+                                  handleItemUpdate={handleItemUpdate}
+                                />
                               )
                             )
                           }
                         </FrameContainer>
+                      )
+                    }
+
+                    if (item.type === 'icon_text') {
+                      return (
+                        <IconTextContainer>
+                          {
+                            items.map(
+                              item => (
+                                <IconText
+                                  key={item.id}
+                                  title={item.title}
+                                  description={item.description}
+                                  isEditable={true}
+
+                                  icon={renderIcons(item.icon)}
+
+                                  id={item.id}
+                                  profile_id={profile_id}
+                                  handleItemUpdate={handleItemUpdate}
+                                />
+                              )
+                            )
+                          }
+                        </IconTextContainer>
                       )
                     }
 
@@ -259,7 +379,13 @@ export function SectionComponentController({ id, profile_id, title, value, type,
               Adicionar item
             </ComponentButton>
           </div>
+
           :
+
+          /* !!! READ-ONLY COMPONENTS-ITEM RENDERING !!! */
+          /* !!! READ-ONLY COMPONENTS-ITEM RENDERING !!! */
+          /* !!! READ-ONLY COMPONENTS-ITEM RENDERING !!! */
+
           <>
             {
               type === 'icon_button' &&
@@ -267,7 +393,17 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <IconButton key={item.id} title={item.title} description={item.description} icon={<Cursor size={24} weight='light' />} arrowRight={true} path={item.path} />
+                      <IconButton
+                        key={item.id}
+                        title={item.title}
+                        description={item.description}
+                        icon={renderIcons(item.icon)}
+                        arrowRight={true}
+                        path={item.path}
+                        isEditable={false}
+
+                        handleItemUpdate={handleItemUpdate}
+                      />
                     )
                   )
                 }
@@ -286,6 +422,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         description={item.description}
                         percentage={item.value}
                         handleItemUpdate={handleItemUpdate}
+                        isEditable={false}
                       />
                     )
                   )
@@ -294,31 +431,135 @@ export function SectionComponentController({ id, profile_id, title, value, type,
             }
 
             {
-              type === 'block_header' &&
-              <BlockHeader title={title} description={description}>
+              type === 'icon_text' &&
+              <IconTextContainer>
                 {
                   items.map(
                     item => (
-                      <div key={item.id}>
-                        {item.type === 'icon_button' &&
-                          <IconButton
-                            title={item.title}
-                            description={item.description}
-                            icon={<WhatsappLogo weight="light" />}
-                            arrowRight={true}
-                            path={item.path}
-                          />}
+                      <IconText
+                        key={item.id}
+                        title={item.title}
+                        description={item.description}
+                        isEditable={false}
 
-                        {item.type === 'info_graphic' &&
-                          <InfoGraphic
-                            title={item.title}
-                            description={item.description}
-                            percentage={item.value}
-                            handleItemUpdate={handleItemUpdate}
-                          />}
-                      </div>
+                        icon={renderIcons(item.icon)}
+
+                        id={item.id}
+                        profile_id={profile_id}
+                        handleItemUpdate={handleItemUpdate}
+                      />
                     )
                   )
+                }
+              </IconTextContainer>
+            }
+
+            {
+              type === 'block_header' &&
+              <BlockHeader title={title} description={description}>
+                {
+                  items.map(item => {
+
+                    if (item.type === 'icon_button') {
+                      return (
+                        <IconButton
+                          title={item.title}
+                          description={item.description}
+                          icon={renderIcons(item.icon)}
+                          arrowRight={true}
+                          key={item.id}
+                          isEditable={false}
+
+                          id={item.id}
+                          profile_id={profile_id}
+
+                          handleItemUpdate={handleItemUpdate}
+                        />
+                      )
+                    }
+
+                    if (item.type === 'info_graphic') {
+                      return (
+                        <InfoGraphic
+                          title={item.title}
+                          description={item.description}
+                          percentage={item.value}
+                          key={item.id}
+                          isEditable={false}
+
+                          id={item.id}
+                          profile_id={profile_id}
+                          handleItemUpdate={handleItemUpdate}
+                        />
+                      )
+                    }
+
+                    if (item.type === 'text') {
+                      return (
+                        <Text
+                          key={item.id}
+                          id={item.id}
+                          title={item.title}
+
+                          isEditable={false}
+                          handleItemUpdate={handleItemUpdate}
+                        >
+                          {item.description}
+                        </Text>
+                      )
+                    }
+
+                    if (item.type === 'frame') {
+                      return (
+                        <FrameContainer key={item.id}>
+                          {
+                            items.map(
+                              item => (
+                                <Frame
+                                  key={item.id}
+                                  src={item.icon}
+                                  alt={item.description}
+                                  isEditable={false}
+
+                                  handleItemUpdate={handleItemUpdate}
+                                />
+                              )
+                            )
+                          }
+                        </FrameContainer>
+                      )
+                    }
+
+                    if (item.type === 'icon_text') {
+                      return (
+                        <IconTextContainer>
+                          {
+                            items.map(
+                              item => (
+                                <IconText
+                                  key={item.id}
+                                  title={item.title}
+                                  description={item.description}
+                                  isEditable={false}
+
+                                  icon={renderIcons(item.icon)}
+
+                                  id={item.id}
+                                  profile_id={profile_id}
+                                  handleItemUpdate={handleItemUpdate}
+                                />
+                              )
+                            )
+                          }
+                        </IconTextContainer>
+                      )
+                    }
+
+                    return (
+                      <h3>Couldn't identify component.</h3>
+                    )
+
+                  })
                 }
               </BlockHeader>
             }
@@ -329,7 +570,14 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <P600 key={item.id}>{item.description}</P600>
+                      <Text
+                        title={item.title}
+                        handleItemUpdate={() => { }}
+                        key={item.id}
+                        isEditable={false}
+                      >
+                        {item.description}
+                      </Text>
                     )
                   )
                 }
@@ -342,7 +590,14 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                 {
                   items.map(
                     item => (
-                      <Frame key={item.id} src={item.icon} />
+                      <Frame
+                        key={item.id}
+                        src={item.icon}
+                        alt={item.description}
+                        isEditable={false}
+
+                        handleItemUpdate={() => { }}
+                      />
                     )
                   )
                 }

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Main = styled.div`
   height: auto;
-  width: 100%;
+  width: auto;
 
   display: flex;
   flex-direction: column;
@@ -36,19 +36,9 @@ export const ShowActionBallon = styled.div`
   border-radius: 0.375rem;
   padding: 0.25rem;
 
+  z-index: 10;
+
   animation: openActionBallon 0.15s ease-out forwards;
-
-  @keyframes openActionBallon {
-    0%{
-      transform: scale(0.98) translate(0 , -0.25rem);
-      opacity: 0.8;
-    }
-
-    100%{
-      transform: scale(1) translate(0, 0);
-      opacity: 1;
-    }
-  }
 
   button {
     display: flex;
