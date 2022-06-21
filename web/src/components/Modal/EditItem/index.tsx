@@ -47,7 +47,7 @@ export function EditItem({ isOpen, onRequestClose, profile_id, id, item_title, i
       profile_id,
       id,
       title,
-      value: value? value : 0,
+      value: value ? value : 0,
       description,
       type: item_type,
       icon,
@@ -60,18 +60,27 @@ export function EditItem({ isOpen, onRequestClose, profile_id, id, item_title, i
     onRequestClose();
   }
 
+  function internalRequestClose() {
+    onRequestClose();
+    setTitle(item_title);
+    setDescription(item_description);
+    setValue(item_value);
+    setType(item_type);
+    setIcon(item_icon);
+    setPath(item_path);
+  }
   return (
     <Div>
       <Modal
         isOpen={isOpen}
-        onRequestClose={onRequestClose}
+        onRequestClose={internalRequestClose}
         overlayClassName="react-modal-overlay"
         className="react-modal-content"
       >
         <Container onSubmit={editItem}>
           <div className="react-modal-content-header">
             <h2>Editar item</h2>
-            <X className="react-modal-close" size={24} onClick={onRequestClose} />
+            <X className="react-modal-close" size={24} onClick={internalRequestClose} />
           </div>
 
           <P600>{item_type === 'text' && 'Novo texto:'}</P600>

@@ -35,7 +35,7 @@ interface Component {
 
 export function SectionComponentController({ id, profile_id, title, value, type, description, handleComponentsUpdate }: Component) {
   const { username } = useParams();
-  
+
   const { isAuthenticated, account } = useContext(AuthContext);
   const { renderIcons } = useContext(DataContext);
 
@@ -43,9 +43,9 @@ export function SectionComponentController({ id, profile_id, title, value, type,
   const [editComponentModalOpen, setEditComponentModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [updateItems, setUpdateItems] = useState(false);
-  
+
   const [items, setItems] = useState<Component[]>([]);
-  
+
   const isItMyAccount = username === account?.username;
 
   useEffect(() => {
@@ -322,51 +322,35 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
                     if (item.type === 'frame') {
                       return (
-                        <FrameContainer key={item.id}>
-                          {
-                            items.map(
-                              item => (
-                                <Frame
-                                  key={item.id}
+                        <Frame
+                          key={item.id}
 
-                                  id={item.id}
-                                  profile_id={profile_id}
-                                  src={item.icon}
-                                  alt={item.description}
-                                  isEditable={true}
+                          id={item.id}
+                          profile_id={profile_id}
+                          src={item.icon}
+                          alt={item.description}
+                          isEditable={true}
 
-                                  handleItemUpdate={handleItemUpdate}
-                                />
-                              )
-                            )
-                          }
-                        </FrameContainer>
+                          handleItemUpdate={handleItemUpdate}
+                        />
                       )
                     }
 
                     if (item.type === 'icon_text') {
                       return (
-                        <IconTextContainer key={item.id}>
-                          {
-                            items.map(
-                              item => (
-                                <IconText
-                                  key={item.id}
-                                  title={item.title}
-                                  description={item.description}
-                                  isEditable={true}
+                        <IconText
+                          key={item.id}
+                          title={item.title}
+                          description={item.description}
+                          isEditable={true}
 
-                                  item_icon={item.icon}
-                                  icon={renderIcons(item.icon)}
+                          item_icon={item.icon}
+                          icon={renderIcons(item.icon)}
 
-                                  id={item.id}
-                                  profile_id={profile_id}
-                                  handleItemUpdate={handleItemUpdate}
-                                />
-                              )
-                            )
-                          }
-                        </IconTextContainer>
+                          id={item.id}
+                          profile_id={profile_id}
+                          handleItemUpdate={handleItemUpdate}
+                        />
                       )
                     }
 
@@ -507,46 +491,30 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
                     if (item.type === 'frame') {
                       return (
-                        <FrameContainer key={item.id}>
-                          {
-                            items.map(
-                              item => (
-                                <Frame
-                                  key={item.id}
-                                  id={item.id}
-                                  src={item.icon}
-                                  alt={item.description}
-                                  isEditable={false}
+                        <Frame
+                          key={item.id}
+                          id={item.id}
+                          src={item.icon}
+                          alt={item.description}
+                          isEditable={false}
 
-                                  handleItemUpdate={handleItemUpdate}
-                                />
-                              )
-                            )
-                          }
-                        </FrameContainer>
+                          handleItemUpdate={handleItemUpdate}
+                        />
                       )
                     }
 
                     if (item.type === 'icon_text') {
                       return (
-                        <IconTextContainer key={item.id}>
-                          {
-                            items.map(
-                              item => (
-                                <IconText
-                                  key={item.id}
-                                  title={item.title}
-                                  description={item.description}
-                                  isEditable={false}
+                        <IconText
+                          key={item.id}
+                          title={item.title}
+                          description={item.description}
+                          isEditable={false}
 
-                                  icon={renderIcons(item.icon)}
+                          icon={renderIcons(item.icon)}
 
-                                  handleItemUpdate={handleItemUpdate}
-                                />
-                              )
-                            )
-                          }
-                        </IconTextContainer>
+                          handleItemUpdate={handleItemUpdate}
+                        />
                       )
                     }
 
@@ -587,7 +555,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                     item => (
                       <Frame
                         key={item.id}
-                        
+
                         src={item.icon}
                         alt={item.description}
                         isEditable={false}

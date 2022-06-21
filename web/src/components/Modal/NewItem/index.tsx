@@ -29,11 +29,11 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id, component_type
   const [description, setDescription] = useState('');
   const [value, setValue] = useState(0);
   const [type, setType] = useState(
-    component_type === 'icon_button' ? component_type : '' ||
-      component_type === 'icon_text' ? component_type : '' ||
-        component_type === 'frame' ? component_type : '' ||
-          component_type === 'text' ? component_type : '' ||
-            component_type === 'info_graphic' ? component_type : '' ||
+    component_type === 'icon_button' && component_type ||
+    component_type === 'icon_text' && component_type ||
+    component_type === 'frame' && component_type ||
+    component_type === 'text' && component_type ||
+    component_type === 'info_graphic' && component_type ||
     component_type === 'block_header' && 'text'
   );
   const [icon, setIcon] = useState('Article');
@@ -67,11 +67,11 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id, component_type
     setDescription('');
     setValue(0);
     setType(
-      component_type === 'icon_button' ? component_type : '' ||
-        component_type === 'icon_text' ? component_type : '' ||
-          component_type === 'frame' ? component_type : '' ||
-            component_type === 'text' ? component_type : '' ||
-              component_type === 'info_graphic' ? component_type : '' ||
+      component_type === 'icon_button' && component_type ||
+      component_type === 'icon_text' && component_type ||
+      component_type === 'frame' && component_type ||
+      component_type === 'text' && component_type ||
+      component_type === 'info_graphic' && component_type ||
       component_type === 'block_header' && 'text'
     );
     setIcon('Article');
@@ -84,11 +84,11 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id, component_type
     setDescription('');
     setValue(0);
     setType(
-      component_type === 'icon_button' ? component_type : '' ||
-        component_type === 'icon_text' ? component_type : '' ||
-          component_type === 'frame' ? component_type : '' ||
-            component_type === 'text' ? component_type : '' ||
-              component_type === 'info_graphic' ? component_type : '' ||
+      component_type === 'icon_button' && component_type ||
+      component_type === 'icon_text' && component_type ||
+      component_type === 'frame' && component_type ||
+      component_type === 'text' && component_type ||
+      component_type === 'info_graphic' && component_type ||
       component_type === 'block_header' && 'text'
     );
     setIcon('Article');

@@ -9,6 +9,10 @@ export const Container = styled.form`
   height: auto;
   width: 20rem;
 
+  @media screen and (max-width: 720px) {
+    width: auto;
+  }
+
   .MainContainer {
     display: flex;
     flex-direction: column;
