@@ -1,4 +1,5 @@
 import { X } from "phosphor-react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { P600 } from "../../../global";
 import { NewComponentButton } from "./components/NewComponentButton";
@@ -13,6 +14,66 @@ interface NewComponentProps {
 }
 
 export function NewComponent({ isOpen, onRequestClose, id, profile_id, handleComponentsUpdate }: NewComponentProps) {
+
+  const componentList = [
+    {
+      title: 'Texto',
+      description: 'Adicionar um texto',
+      component: 'text',
+      section_id: id,
+      profile_id
+    },
+
+    {
+      title: 'Botão com ícone',
+      description: 'Adiciona um botão com um ícone de sua escolha e com redirecionamento de links',
+      component: 'icon_button',
+    },
+
+    {
+      title: 'Texto com ícone',
+      description: 'Adiciona um texto com uma descrição e um ícone de sua escolha.',
+      component: 'icon_text',
+    },
+
+    {
+      title: 'Divisor de informações',
+      description: 'Adiciona um container onde se colocam informações em formato de lista.',
+      component: 'block_header',
+    },
+
+    {
+      title: 'Gráfico Simples',
+      description: 'Adiciona um gráfico de linha horizontal, utiliza valores percentuais.',
+      component: 'info_graphic',
+    },
+
+    {
+      title: 'Imagem',
+      description: 'Adiciona múltiplas imagens.',
+      component: 'frame',
+    },
+  ];
+
+  const [filteredComponents, setFilteredComponents] = useState([...componentList]);
+  const [search, setSearch] = useState<string>();
+
+  useEffect(() => {
+    search ?
+      setFilteredComponents(componentList.filter(item =>
+        item.title
+          .normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+          .toLowerCase()
+          .includes(
+            search
+              .normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+              .toLowerCase()
+          ))
+      )
+      :
+      setFilteredComponents(componentList.filter(item => item.title));
+  }, [search]);
+
   return (
     <Div>
       <Modal
@@ -29,61 +90,27 @@ export function NewComponent({ isOpen, onRequestClose, id, profile_id, handleCom
 
           <P600>Selecione um componente de sua preferência</P600>
 
+          <input type={'text'} placeholder='Buscar um componente' onChange={(event) => {
+            setSearch(event.target.value);
+          }} />
+
           <div className="NewComponentContainer">
-            <NewComponentButton
-              title="Botão com ícone"
-              description="Adicionar um botão com icone, com redirecionamento de links"
-              component="icon_button"
-              section_id={id}
-              profile_id={profile_id}
+            {
+              filteredComponents.map(item => (
+                <NewComponentButton
+                  title={item.title}
+                  description={item.description}
+                  component={item.component}
+                  section_id={id}
+                  profile_id={profile_id}
 
-              handleComponentsUpdate={handleComponentsUpdate}
-              onRequestClose={onRequestClose}
-            />
+                  key={item.title}
 
-            <NewComponentButton
-              title="Gráfico Simples"
-              description="Mostrar informações"
-              component="info_graphic"
-              section_id={id}
-              profile_id={profile_id}
-
-              handleComponentsUpdate={handleComponentsUpdate}
-              onRequestClose={onRequestClose}
-            />
-
-            <NewComponentButton
-              title="Divisor"
-              description="Layout"
-              component="block_header"
-              section_id={id}
-              profile_id={profile_id}
-
-              handleComponentsUpdate={handleComponentsUpdate}
-              onRequestClose={onRequestClose}
-            />
-
-            <NewComponentButton
-              title="Texto"
-              description="Escrita e informação"
-              component="text"
-              section_id={id}
-              profile_id={profile_id}
-
-              handleComponentsUpdate={handleComponentsUpdate}
-              onRequestClose={onRequestClose}
-            />
-
-            <NewComponentButton
-              title="Imagem"
-              description="Informação visual"
-              component="frame"
-              section_id={id}
-              profile_id={profile_id}
-
-              handleComponentsUpdate={handleComponentsUpdate}
-              onRequestClose={onRequestClose}
-            />
+                  handleComponentsUpdate={handleComponentsUpdate}
+                  onRequestClose={onRequestClose}
+                />
+              ))
+            }
           </div>
         </Container>
       </Modal>

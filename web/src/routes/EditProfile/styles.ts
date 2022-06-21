@@ -14,7 +14,8 @@ export const Container = styled.div`
   .MainContainer {
     display: flex;
     flex-direction: column;
-    max-width: 1080px;
+    min-width: 240px;
+    width: 1000px;
 
     h1 {
       margin-bottom: 1rem;
@@ -23,9 +24,15 @@ export const Container = styled.div`
       margin-bottom: 0.5rem;
     }
 
+    
     form {
       margin-top: 1.5rem;
       gap: 1rem;
+      
+      p {
+        margin-bottom: 0.375rem;
+      }
+      
       .NameInputs {
         display: flex;
         flex-wrap: nowrap;
@@ -151,6 +158,9 @@ export const ProfileContainer = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 0.5rem;
+  display: flex;
+  
+  width: auto;
   
   @media screen and (max-width: 720px) {
     text-align: center;
@@ -159,6 +169,7 @@ export const ProfileContainer = styled.div`
   .MainContainer{
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: row;
     gap: 8rem;
     

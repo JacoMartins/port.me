@@ -62,8 +62,8 @@ export default function EditProfile() {
     fetch();
   }, []);
 
-  if(!account?.username){
-    return(
+  if (!account?.username) {
+    return (
       <NotFound />
     )
   }
@@ -115,6 +115,9 @@ export default function EditProfile() {
 
             </ProfileContainer>
 
+            <br></br>
+            <P600>Por enquanto estamos trazendo as imagens para a aplicação por meio de URLs pois ainda não temos onde guardá-las, a aplicação ainda está em fase de desenvolvimento.</P600>
+
             <form onSubmit={updateProfile}>
               <div className="NameInputs">
                 <input type='text' placeholder='Primeiro nome' defaultValue={firstName} onChange={(event) => setFirstName(event.target.value)} />
@@ -127,7 +130,10 @@ export default function EditProfile() {
               <hr></hr>
 
               <div className="Pictures">
+                <P600>Foto de perfil</P600>
                 <input type='text' placeholder='Foto de perfil (Em desenvolvimento)' defaultValue={profilePicture as string | undefined} onChange={(event) => setProfilePicture(event.target.value as any)} />
+                
+                <P600>Capa do perfil</P600>
                 <input type='text' placeholder='Foto de capa (Em desenvolvimento)' defaultValue={profileCover} onChange={(event) => setProfileCover(event.target.value)} />
               </div>
 
@@ -141,7 +147,7 @@ export default function EditProfile() {
 
             </form>
           </>
-          :
+            :
             <LoadContainer>
               <CircleNotch className="load" size={32} />
             </LoadContainer>}

@@ -12,6 +12,8 @@ interface IconButtonProps {
   path?: string;
   arrowRight: boolean;
 
+  item_icon?: string;
+
   id?: string;
   profile_id?: string;
   handleItemUpdate: () => void;
@@ -19,7 +21,7 @@ interface IconButtonProps {
   isEditable: boolean;
 }
 
-export function IconButton({ title, description, icon, path, arrowRight, id, profile_id, handleItemUpdate, isEditable }: IconButtonProps) {
+export function IconButton({ title, description, icon, path, arrowRight, id, profile_id, handleItemUpdate, isEditable, item_icon }: IconButtonProps) {
   const type = 'icon_button';
 
   const { account, isAuthenticated } = useContext(AuthContext);
@@ -34,12 +36,14 @@ export function IconButton({ title, description, icon, path, arrowRight, id, pro
             item_title={title}
             item_description={description}
             item_type={type}
+            item_icon={item_icon}
+            item_path={path}
 
             id={id}
             profile_id={profile_id}
             handleItemUpdate={handleItemUpdate}
           >
-            <Button onClick={path ? () => undefined : undefined} type="button">
+            <Button type="button">
               <div className='IconButtonContainer'>
                 <div className='IconButton Container'>
 

@@ -33,16 +33,17 @@ export function Frame({ src, alt, id, profile_id, handleItemUpdate, isEditable }
             item_title={'Frame'}
             item_description={alt as string}
             item_type={type}
+            item_icon={src}
 
             id={id}
             profile_id={profile_id}
             handleItemUpdate={handleItemUpdate}
           >
-            <Image src={src} title={alt as string}>
+            <Image src={src} title={alt as string} className="Frame">
             </Image>
           </EditableComponent>
           :
-          <Image src={src} title={alt as string}>
+          <Image src={src} title={alt as string} className="Frame">
           </Image>
       }
     </>

@@ -13,6 +13,10 @@ export const Container = styled.form`
     width: auto;
   }
 
+  > input {
+    margin-bottom: 0.5rem;
+  }
+
   .NewComponentContainer {
     display: flex;
     flex-direction: column;

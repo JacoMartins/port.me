@@ -23,7 +23,7 @@ export const Main = styled.div`
   }
 `;
 
-export const ShowActionBallon = styled.div`
+export const ShowActionBallon = styled.aside`
   position: absolute;
   display: flex;
   flex-direction: row;

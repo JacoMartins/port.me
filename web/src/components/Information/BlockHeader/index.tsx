@@ -11,7 +11,7 @@ interface BlockHeaderProps {
 export function BlockHeader({ title, description, children }:BlockHeaderProps){
     return (
       <Aside>
-        <div className='TextContainer'>
+        <div className='BlockHeader TextContainer'>
   
           {title? <h2>{title}</h2> : null}
   

@@ -24,9 +24,14 @@ export const Div = styled.div`
     >div {
       width: auto;
     }
+
+    .Frame {
+      height: 8rem;
+      margin-bottom: 0;
+    }
   }
 
-  .TextContainer {
+  .Demo.TextContainer {
     margin-top: 0.5rem;
     padding: 0.25rem;
     text-align: left;

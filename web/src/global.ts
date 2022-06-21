@@ -1,4 +1,8 @@
+import { Download } from 'phosphor-react';
 import styled, { createGlobalStyle } from 'styled-components';
+
+import CaretDownWhite from './resources/icons/caret-down-white.svg';
+import CaretDownBlack from './resources/icons/caret-down-black.svg';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -136,6 +140,33 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
   
+  select {
+    background: var(--dark-mode-background);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.375rem;
+    outline: 0 solid rgba(255, 255, 255, 0.25);
+    font-size: 1rem;
+    padding: 0.5rem 0.5rem;
+    transition: 0.15s ease-in;
+    color: var(--dark-mode-text-850);
+
+    appearance: none;
+
+    background-image: url('${CaretDownWhite}');
+    background-position: right 0.75rem center;
+    background-size: 12px;
+    background-repeat: no-repeat;
+
+    @media screen and (max-width: 30.3125rem) {
+      font-size: calc(var(--h1-font-size) + 0.125rem);   
+      padding: 0.75rem 0.5rem;   
+    }
+
+    &:active{
+      border: 1px solid var(--dark-mode-blue-600);     
+      outline: 2px solid var(--dark-mode-blue-250);     
+    }
+  }
 
   h1 {
     --h1-font-size: 2.25rem;
@@ -377,6 +408,10 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
 
+  }
+
+  input[type=range] {
+    padding: 0;
   }
 
   hr{

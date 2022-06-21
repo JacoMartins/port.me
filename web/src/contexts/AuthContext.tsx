@@ -92,7 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     cookies.remove('refreshToken', {
       path: '/'
     });
-    window.location.reload();
+    window.location.href = '/';
   }
 
 

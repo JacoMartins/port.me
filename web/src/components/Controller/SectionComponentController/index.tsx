@@ -18,6 +18,7 @@ import { ColumnContainer } from "../../Base/Section/styles";
 import { Text } from "../../Information/Text";
 import { IconTextContainer } from "../../Information/IconText/styles";
 import { IconText } from "../../Information/IconText";
+import { DataContext } from "../../../contexts/DataContext";
 
 interface Component {
   id: string;
@@ -34,25 +35,18 @@ interface Component {
 
 export function SectionComponentController({ id, profile_id, title, value, type, description, handleComponentsUpdate }: Component) {
   const { username } = useParams();
+  
+  const { isAuthenticated, account } = useContext(AuthContext);
+  const { renderIcons } = useContext(DataContext);
+
   const [newItemModalOpen, setNewItemModalOpen] = useState(false);
   const [editComponentModalOpen, setEditComponentModalOpen] = useState(false);
-  const { isAuthenticated, account } = useContext(AuthContext);
-  const isItMyAccount = username === account?.username;
   const [isDeleting, setIsDeleting] = useState(false);
   const [updateItems, setUpdateItems] = useState(false);
-
+  
   const [items, setItems] = useState<Component[]>([]);
-
-  const renderIcons = (icon: string | undefined) => (
-    icon === 'InstagramLogo' && <InstagramLogo size={24} weight='light' /> ||
-    icon === 'WhatsappLogo' && <WhatsappLogo size={24} weight='light' /> ||
-    icon === 'GitHubLogo' && <GithubLogo size={24} weight='light' /> ||
-    icon === 'LinkedInLogo' && <LinkedinLogo size={24} weight='light' /> ||
-    icon === 'Phone' && <Phone size={24} weight='light' /> ||
-    icon === 'Email' && <Envelope size={24} weight='light' /> ||
-    icon === 'CircleWavyCheck' && <CircleWavyCheck size={24} weight='light' /> ||
-    icon === 'Article' && <Article size={24} weight='light' />
-  );
+  
+  const isItMyAccount = username === account?.username;
 
   useEffect(() => {
     const fetch = async () => {
@@ -80,7 +74,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
   }
 
   function handleNewItemModal() {
-    setNewItemModalOpen(!newItemModalOpen)
+    setNewItemModalOpen(!newItemModalOpen);
   }
 
   function handleEditComponentModal() {
@@ -152,7 +146,9 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         description={item.description}
                         icon={renderIcons(item.icon)}
                         arrowRight={true}
+                        path={item.path}
                         isEditable={true}
+                        item_icon={item.icon}
 
                         id={item.id}
                         profile_id={profile_id}
@@ -245,6 +241,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         description={item.description}
                         isEditable={true}
 
+                        item_icon={item.icon}
                         icon={renderIcons(item.icon)}
 
                         id={item.id}
@@ -279,6 +276,9 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                           arrowRight={true}
                           key={item.id}
                           isEditable={true}
+                          path={item.path}
+
+                          item_icon={item.icon}
 
                           id={item.id}
                           profile_id={profile_id}
@@ -309,6 +309,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         <Text
                           key={item.id}
                           id={item.id}
+                          profile_id={profile_id}
                           title={item.title}
 
                           isEditable={true}
@@ -327,6 +328,9 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                               item => (
                                 <Frame
                                   key={item.id}
+
+                                  id={item.id}
+                                  profile_id={profile_id}
                                   src={item.icon}
                                   alt={item.description}
                                   isEditable={true}
@@ -342,7 +346,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
                     if (item.type === 'icon_text') {
                       return (
-                        <IconTextContainer>
+                        <IconTextContainer key={item.id}>
                           {
                             items.map(
                               item => (
@@ -352,6 +356,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                                   description={item.description}
                                   isEditable={true}
 
+                                  item_icon={item.icon}
                                   icon={renderIcons(item.icon)}
 
                                   id={item.id}
@@ -443,9 +448,6 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                         isEditable={false}
 
                         icon={renderIcons(item.icon)}
-
-                        id={item.id}
-                        profile_id={profile_id}
                         handleItemUpdate={handleItemUpdate}
                       />
                     )
@@ -470,9 +472,6 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                           key={item.id}
                           isEditable={false}
 
-                          id={item.id}
-                          profile_id={profile_id}
-
                           handleItemUpdate={handleItemUpdate}
                         />
                       )
@@ -487,8 +486,6 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                           key={item.id}
                           isEditable={false}
 
-                          id={item.id}
-                          profile_id={profile_id}
                           handleItemUpdate={handleItemUpdate}
                         />
                       )
@@ -498,7 +495,6 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                       return (
                         <Text
                           key={item.id}
-                          id={item.id}
                           title={item.title}
 
                           isEditable={false}
@@ -517,6 +513,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                               item => (
                                 <Frame
                                   key={item.id}
+                                  id={item.id}
                                   src={item.icon}
                                   alt={item.description}
                                   isEditable={false}
@@ -532,7 +529,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
                     if (item.type === 'icon_text') {
                       return (
-                        <IconTextContainer>
+                        <IconTextContainer key={item.id}>
                           {
                             items.map(
                               item => (
@@ -544,8 +541,6 @@ export function SectionComponentController({ id, profile_id, title, value, type,
 
                                   icon={renderIcons(item.icon)}
 
-                                  id={item.id}
-                                  profile_id={profile_id}
                                   handleItemUpdate={handleItemUpdate}
                                 />
                               )
@@ -592,6 +587,7 @@ export function SectionComponentController({ id, profile_id, title, value, type,
                     item => (
                       <Frame
                         key={item.id}
+                        
                         src={item.icon}
                         alt={item.description}
                         isEditable={false}

@@ -33,6 +33,7 @@ export function InfoGraphic({ title, description, percentage, id, profile_id, ha
         item_title={title}
         item_description={description}
         item_type={type}
+        item_value={percentage}
         handleItemUpdate={handleItemUpdate}
       >
         <Div>

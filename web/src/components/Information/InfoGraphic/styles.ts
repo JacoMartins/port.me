@@ -25,6 +25,11 @@ export const Div = styled.div`
     align-items: left;
     text-align: left;
     width: 14rem;
+    
+    > h3 {
+      line-height: 1.125rem;
+      margin-bottom: 0.25rem;
+    }
 
     @media screen and (max-width: 720px) {
       width: 16rem;

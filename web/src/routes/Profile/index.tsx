@@ -58,7 +58,6 @@ export default function Profile() {
             setStatus(200);
             setIsDataReady(true);
           });
-          
       } catch (GET) {
         setStatus(404);
         return;

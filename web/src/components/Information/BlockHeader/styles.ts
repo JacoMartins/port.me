@@ -9,7 +9,7 @@ export const Aside = styled.aside`
     margin-top: 2.5rem;
   }
 
-  .TextContainer{
+  .BlockHeader.TextContainer {
     display: flex;
     align-items:center;
     justify-content:center;
@@ -22,6 +22,7 @@ export const Aside = styled.aside`
       font-size: 1.5rem;
       line-height: 1.5rem;
       letter-spacing: -0.05em;
+      text-align: center;
     }
 
     p{

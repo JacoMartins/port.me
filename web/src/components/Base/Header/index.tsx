@@ -47,7 +47,7 @@ export function Header({ showLogo, showBackButton }: HeaderProps) {
   }
 
   return (
-    <HeaderBody headerType={headerType} showLogo={showLogo}>
+    <HeaderBody headerType={headerType} showLogo={showLogo} id='header'>
       <div className='Container'>
         {showLogo ?
           <div className='LogoContainer' onClick={() => navigate('/')}>

@@ -7,12 +7,39 @@ export const Div = styled.div`
 export const Container = styled.form`
   background: var(--dark-mode-background);
   height: auto;
-  width: auto;
+  width: 20rem;
 
   .MainContainer {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    .DemoContainer {
+      border: solid 1px rgba(255, 255, 255, 0.25);
+      width: 100%;
+      border-radius: 0.375rem;
+      padding: 1.5rem;
+      overflow: hidden;
+
+      button {
+        margin: 0;
+      }
+
+      >div {
+        width: auto;
+      }
+
+      >aside{
+        width: auto;
+        height: auto;
+        margin: 1.25rem 0rem 1.25rem -0.5rem;
+      }
+
+      .Frame {
+        height: 8rem;
+        margin-bottom: 0;
+      }
+    }
 
     textarea{
       height: 8rem;

@@ -1,10 +1,12 @@
-import { CircleNotch, Cursor } from "phosphor-react";
+import { Article, CircleNotch, Cursor } from "phosphor-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { P600, P850 } from "../../../../../global";
 import { api } from "../../../../../services/api";
 import { BlockHeader } from "../../../../Information/BlockHeader";
+import { Frame } from "../../../../Information/Frame";
 import { IconButton } from "../../../../Information/IconButton";
+import { IconText } from "../../../../Information/IconText";
 import { InfoGraphic } from "../../../../Information/InfoGraphic";
 import { Text } from "../../../../Information/Text";
 import { Div } from "./styles";
@@ -53,7 +55,10 @@ export function NewComponentButton({ title, description, component, section_id, 
             icon={<Cursor weight="light" />}
             arrowRight={true}
 
-            handleItemUpdate={() => {}}
+            id='a'
+            profile_id='a'
+
+            handleItemUpdate={() => { }}
             isEditable={false}
           />
         }
@@ -64,7 +69,10 @@ export function NewComponentButton({ title, description, component, section_id, 
             title="Andamento do meu curso"
             description="none"
             percentage={60}
-            handleItemUpdate={() => {}}
+            handleItemUpdate={() => { }}
+
+            id='a'
+            profile_id='a'
 
             isEditable={false}
           />
@@ -82,13 +90,41 @@ export function NewComponentButton({ title, description, component, section_id, 
 
         {
           component === 'text' &&
-          <Text title='Demo' isEditable={false} handleItemUpdate={() => {}}>
+          <Text title='Demo' isEditable={false} handleItemUpdate={() => { }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Text>
         }
+
+        {
+          component === 'icon_text' &&
+          <IconText
+            title='Texto com ícone'
+            description="Demonstração"
+
+            id='a'
+            profile_id='a'
+
+            icon={<Article size={24} weight='light' />}
+            isEditable={false}
+            handleItemUpdate={() => { }}
+          />
+        }
+
+        {
+          component === 'frame' &&
+          <Frame
+            src={'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&w=1000&q=80'}
+            alt='Imagem de Demonstração'
+
+            id='a'
+            profile_id='a'
+            isEditable={false}
+            handleItemUpdate={() => { }}
+          />
+        }
       </div>
 
-      <div className="TextContainer">
+      <div className="Demo TextContainer">
         <p>{title}</p>
         <P600>{description}</P600>
         {isSendingData ?

@@ -106,7 +106,7 @@ export function Section({ id, title, profile_id, handleSectionUpdate }: SectionP
   }
 
   return (
-    <Main>
+    <Main id={id.slice(0, 6)}>
       <NewComponent isOpen={isNewComponentModalOpen} onRequestClose={handleCloseModal} id={id} profile_id={profile_id} handleComponentsUpdate={handleComponentsUpdate} />
       <SectionContainer>
 

@@ -10,11 +10,14 @@ interface EditableComponentProps {
   profile_id?: string;
   handleItemUpdate: () => void;
   item_title: string;
-  item_description: string;
+  item_description?: string;
   item_type: string;
+  item_value?: number;
+  item_icon?: string;
+  item_path?: string;
 }
 
-export function EditableComponent({ children, id, profile_id, handleItemUpdate, item_title, item_description, item_type }: EditableComponentProps) {
+export function EditableComponent({ children, id, profile_id, handleItemUpdate, item_title, item_description, item_type, item_value, item_icon, item_path }: EditableComponentProps) {
   const [showActions, setShowActions] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditingItemModalOpen, setIsEditingItemModalOpen] = useState(false);
@@ -57,6 +60,9 @@ export function EditableComponent({ children, id, profile_id, handleItemUpdate, 
         item_title={item_title}
         item_description={item_description}
         item_type={item_type}
+        item_value={item_value}
+        item_icon={item_icon}
+        item_path={item_path}
         isOpen={isEditingItemModalOpen}
         onRequestClose={handleCloseEditingItemModal}
         handleItemUpdate={handleItemUpdate}

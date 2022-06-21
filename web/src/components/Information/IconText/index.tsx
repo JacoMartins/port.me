@@ -9,6 +9,8 @@ interface IconTextProps {
   description: string;
   icon?: ReactNode;
 
+  item_icon?: string;
+
   id?: string;
   profile_id?: string;
   handleItemUpdate: () => void;
@@ -16,7 +18,7 @@ interface IconTextProps {
   isEditable: boolean;
 }
 
-export function IconText({ title, description, handleItemUpdate, id, profile_id, icon, isEditable }: IconTextProps) {
+export function IconText({ title, description, handleItemUpdate, id, profile_id, icon, item_icon, isEditable }: IconTextProps) {
   const type = 'icon_text';
 
   const { account, isAuthenticated } = useContext(AuthContext);
@@ -34,13 +36,14 @@ export function IconText({ title, description, handleItemUpdate, id, profile_id,
             item_title={title}
             item_description={description}
             item_type={type}
+            item_icon={item_icon}
           >
             <Div>
               <div className='IconText MainContainer'>
 
                 {icon ? icon : null}
 
-                <div className='TextContainer'>
+                <div className='IconText TextContainer'>
                   <h3>{title}</h3>
                   {description === '' ? null : <p>{description}</p>}
                 </div>

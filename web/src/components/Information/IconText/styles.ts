@@ -57,6 +57,7 @@ export const Div = styled.div`
       display: flex;
       flex-direction: column;
       align-items: left;
+      justify-content: left;
       text-align: left;
       
       h3{ 
