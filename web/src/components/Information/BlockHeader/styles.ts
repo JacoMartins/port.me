@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Aside = styled.aside`
   height: auto;
   margin-top: 2.5rem;
+  display: flex;
+  flex-direction: columm;
+  justify-content: center;
 
   @media screen and (max-width: 870px) {
     text-align: center;
