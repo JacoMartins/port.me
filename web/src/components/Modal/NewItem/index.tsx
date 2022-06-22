@@ -143,12 +143,15 @@ export function NewItem({ isOpen, onRequestClose, id, profile_id, component_type
 
                   <select onChange={event => setIcon(event.target.value)}>
                     <option value='Article'>Artigo</option>
+                    <option value='Bank'>Banco</option>
+                    <option value='Camera'>Camera</option>
                     <option value='CircleWavyCheck'>Check</option>
                     <option value='Email'>Email</option>
                     <option value='GitHubLogo'>GitHub</option>
                     <option value='InstagramLogo'>Instagram</option>
                     <option value='LinkedInLogo'>LinkedIn</option>
                     <option value='Phone'>Telefone</option>
+                    <option value='Brush'>Pincel</option>
                     <option value='WhatsappLogo'>Whatsapp</option>
                   </select>
 

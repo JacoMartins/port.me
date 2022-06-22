@@ -14,6 +14,10 @@ export const Div = styled.div`
   transition: 0.25s;
   color: var(--text-dark);
 
+  p + & {
+    margin-top: 0.75rem;
+  }
+
   @media screen and (max-width: 720px) {
     width: 18rem;
   }

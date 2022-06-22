@@ -5,7 +5,8 @@ export const Aside = styled.aside`
   margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items:center;
+  justify-content:center;
 
   @media screen and (max-width: 870px) {
     text-align: center;

@@ -32,7 +32,8 @@ export default function EditProfile() {
   const [lastName, setLastName] = useState('');
   const [greeting, setGreeting] = useState('');
   const [description, setDescription] = useState('');
-  const [profilePicture, setProfilePicture] = useState<File | null | undefined>();
+  const [profilePicture, setProfilePicture] = useState('');
+  const [pictureFile, setPictureFile] = useState<string | Blob>('');
   const [profileCover, setProfileCover] = useState('');
   const [isSendingData, setIsSendingData] = useState(false);
   const navigate = useNavigate();
@@ -72,14 +73,23 @@ export default function EditProfile() {
     event?.preventDefault();
     setIsSendingData(true);
 
-    await api.put('/profile', {
-      first_name: firstName,
-      last_name: lastName,
-      greeting,
-      description,
-      profile_picture: profilePicture,
-      profile_cover: profileCover
-    })
+    const formData = new FormData();
+    formData.append('file', pictureFile);
+
+    Promise.all([
+      await api.put('/profile', {
+        first_name: firstName,
+        last_name: lastName,
+        greeting,
+        description,
+        // profile_picture: profilePicture,
+        profile_cover: profileCover
+      }),
+
+      await api.patch('/profile/avatar', formData, {
+        
+      })
+    ]);
 
     setIsSendingData(false);
     navigate(`/profile/${profile.username}`);
@@ -105,10 +115,10 @@ export default function EditProfile() {
                 <ProfilePicture src={profilePicture as any}>
                   <User size={128} weight='regular' />
                   <button>
-                    <input type="file" onChange={event => setProfilePicture(event.target.files![0])} />
+                    <input type="file" onChange={event => setPictureFile(event.target.files![0])} />
                     <Camera size={24} weight='regular' />
                   </button>
-                </ ProfilePicture>
+                </ProfilePicture>
               </div>
 
               <div className="Background" />
