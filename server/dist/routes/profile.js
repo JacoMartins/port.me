@@ -5,8 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.profile = void 0;
 const express_1 = __importDefault(require("express"));
-const multer_1 = __importDefault(require("multer"));
-const upload_1 = __importDefault(require("../config/upload"));
 const ensureAuthentication_1 = require("../middlewares/ensureAuthentication");
 const getProfile_1 = require("../useCases/get/getProfile");
 const searchProfileController_1 = require("../useCases/get/searchProfile/searchProfileController");
@@ -17,8 +15,7 @@ const getProfile = new getProfile_1.GetProfile();
 const updateProfile = new updateProfileController_1.UpdateProfileController();
 const searchProfiles = new searchProfileController_1.SearchProfileController();
 const updateProfileAvatar = new updateProfileAvatarController_1.updateProfileAvatarController();
-const uploadAvatar = (0, multer_1.default)(upload_1.default.upload('./storage/app/public'));
 exports.profile.get('/', getProfile.handle);
 exports.profile.put('/', ensureAuthentication_1.ensureAuthenticated, updateProfile.handle);
 exports.profile.get('/search', searchProfiles.handle);
-exports.profile.patch('/avatar', ensureAuthentication_1.ensureAuthenticated, uploadAvatar.single('avatar'), updateProfileAvatar.handle);
+exports.profile.patch('/avatar', ensureAuthentication_1.ensureAuthenticated, updateProfileAvatar.handle);
