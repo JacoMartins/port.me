@@ -1,5 +1,7 @@
+import { prisma } from "../prisma";
 import { NextFunction, Request, Response } from "express";
 import { verify } from 'jsonwebtoken';
+import auth from "../config/auth";
 
 interface IPayLoad{
   sub: string;
@@ -14,9 +16,20 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
 
   const [, token] = authHeader.split(' ');
 
+  
   try {
-    const { sub } = verify(token, 'aeb014037644e19d124d603ff9b3ed75') as IPayLoad;
-    console.log(`\n${sub}`)
+    const { sub: account_id } = verify(token, auth.secret_refresh_token) as IPayLoad;
+    
+    const account_token = await prisma.accountToken.findFirst({
+      where: {
+        account_id,
+        refresh_token: token
+      }
+    });
+
+    if(!account_token){
+      throw new Error("Token doesn't exists");
+    }
 
     next();
   } catch {

@@ -1,15 +1,17 @@
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
-import { routes } from './routes';
+import { router } from './routes';
 import { ensureAuthenticated } from './middlewares/ensureAuthentication';
+import { env } from 'process';
 
 const app = express();
+const port = process.env.PORT || 3333;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(routes);
+app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
   if(err instanceof Error){
@@ -19,6 +21,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
   return res.status(500).json({error: 'Internal Server Error.'});
 });
 
-app.listen(process.env.PORT || 3333, () => {
-  console.log('HTTP server running');
+app.listen(port, () => {
+  console.log(`HTTP server running on port ${port}.`);
 });

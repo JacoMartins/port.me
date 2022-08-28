@@ -1,7 +1,8 @@
 import { Main } from './styles';
-import NotFoundIllustration from '../../resources/images/404.svg';
+import NotFoundIllustration from '../../resources/images/404.2.svg';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { P600 } from '../../global';
 
 export default function NotFound() {
   const { where } = useParams();
@@ -11,10 +12,10 @@ export default function NotFound() {
       <div className='Container'>
         <img src={NotFoundIllustration} />
 
-        <h1>Desculpe, não conseguimos localizar o que você pediu.</h1>
+        <h2>Desculpe, não conseguimos localizar o que você pediu.</h2>
       </div>
       
-      <a href="https://storyset.com/web">Web illustrations by Storyset</a>
+      <P600>Web illustrations by <a href="https://storyset.com/web">Storyset</a></P600>
     </Main>
   )
 }

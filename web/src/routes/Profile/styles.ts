@@ -4,30 +4,6 @@ interface ProfilePictureProps {
   src?: string;
 }
 
-export const Section = styled.section`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-top: solid 2px rgba(255,255,255, 0.08);
-  padding: 2.5rem 2.5rem;
-  text-align: center;
-`;
-
-export const SectionContainer = styled.div`
-  width: auto;
-  max-width: 720px;
-    
-  @media screen and (max-width: 720px){
-    flex-direction: column-reverse;
-    width: auto;
-    text-align: center;
-  }
-`;
-
-export const Title = styled.h1`
-  margin-bottom: 1.5rem;
-`;
-
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -41,8 +17,9 @@ export const ProfileContainer = styled.div`
 
   overflow: hidden;
 
-  background: var(--dark-mode-cover);
+  background-color: rgba(75, 75, 75, 1);
   background-image: url(${(props: ProfilePictureProps) => props.src});
+  background-blend-mode: multiply;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -57,7 +34,7 @@ export const ProfileContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 720px;
-    z-index: 2;
+    z-index: 0;
     
     @media screen and (max-width: 720px){
       flex-direction: column-reverse;
@@ -84,16 +61,9 @@ export const ProfileContainer = styled.div`
         color: var(--dark-mode-text-600);
         margin-bottom: 2rem;
       }
-    }
-
-    .backgroundFilter {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: ${() => document.getElementById('ProfileContainer')?.offsetHeight}px;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: -1;
+      button{
+        margin-right: 0.375rem;  
+      }
     }
   }
 `;
@@ -107,8 +77,9 @@ export const ProfilePicture = styled.div`
   width: 16rem;
   background-image: url(${(props: ProfilePictureProps) => props.src});
   background-size: cover;
+  background-position: center;
   border-radius: 20rem;
-  border: ${(props: ProfilePictureProps) => props.src? 'none' : 'solid 2px var(--white-850)'};
+  border: ${(props: ProfilePictureProps) => props.src ? 'none' : 'solid 2px var(--white-850)'};
 
   @media screen and (max-width: 720px){
     height: 14rem;
@@ -116,7 +87,7 @@ export const ProfilePicture = styled.div`
   }
 
   svg {
-    display: ${(props: ProfilePictureProps) => props.src? 'none' : 'block'};
+    display: ${(props: ProfilePictureProps) => props.src ? 'none' : 'block'};
   }
 `;
 

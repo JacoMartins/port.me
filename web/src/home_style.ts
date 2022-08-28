@@ -2,12 +2,29 @@ import styled from "styled-components";
 
 export const Main = styled.main`
   .LogoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     margin-bottom: 2rem;
 
-    h1{
+    h2 {
+      font-size: 1rem;
+
+      @media screen and (max-width: 720px){
+        font-size: 1.25rem;
+      }
+    }
+
+    h1 {
       font-weight: 600;
       margin-bottom: 0.25rem;
+      font-size: 1.75rem;
+
+      @media screen and (max-width: 720px) {
+        font-size: 2.375rem;
+      }
 
       span{
         color: var(--dark-mode-blue);
@@ -15,7 +32,20 @@ export const Main = styled.main`
     }
 
     p{
-      color: var(--dark-mode-text-500);
+      margin-top: 1rem;
+    }
+  }
+
+  .MainContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    input {
+      border-radius: 0.375rem;
+      width: 16rem;
     }
   }
 
@@ -27,9 +57,11 @@ export const Main = styled.main`
   align-items: center;
 
   > p{
-    margin-top: 2rem;
+    position: absolute;
+    bottom: 1rem;
     font-size: 0.875rem;
     color: var(--dark-mode-text-600);
+    z-index: -1;
 
     a{
       color: var(--dark-mode-blue);

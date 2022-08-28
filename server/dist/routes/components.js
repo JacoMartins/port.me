@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.components = void 0;
+const express_1 = __importDefault(require("express"));
+const ensureAuthentication_1 = require("../middlewares/ensureAuthentication");
+const ensureAccountMatchs_1 = require("../middlewares/ensureAccountMatchs");
+const getSectionComponentController_1 = require("../useCases/get/getSectionComponent/getSectionComponentController");
+const postSectionComponentController_1 = require("../useCases/post/postSectionComponent/postSectionComponentController");
+const updateSectionComponentController_1 = require("../useCases/put/updateSectionComponent/updateSectionComponentController");
+const deleteSectionComponentController_1 = require("../useCases/delete/deleteSectionComponent/deleteSectionComponentController");
+const getSectionComponent = new getSectionComponentController_1.GetSectionComponentsController();
+const updateSectionComponent = new updateSectionComponentController_1.UpdateSectionComponentController();
+const deleteSectionComponent = new deleteSectionComponentController_1.DeleteSectionComponentController();
+const postSectionComponent = new postSectionComponentController_1.PostSectionComponentController();
+exports.components = express_1.default.Router();
+exports.components.get('/', getSectionComponent.handle);
+exports.components.put('/', ensureAuthentication_1.ensureAuthenticated, ensureAccountMatchs_1.ensureAccountMatchs, updateSectionComponent.handle);
+exports.components.delete('/', ensureAuthentication_1.ensureAuthenticated, ensureAccountMatchs_1.ensureAccountMatchs, deleteSectionComponent.handle);
+exports.components.post('/', ensureAuthentication_1.ensureAuthenticated, ensureAccountMatchs_1.ensureAccountMatchs, postSectionComponent.handle);

@@ -1,34 +1,17 @@
 import express from 'express';
-import { ensureAuthenticated } from './middlewares/ensureAuthentication';
-import { AuthenticateAccountController } from './useCases/authenticateAccount/authenticateAccountController';
-import { CreateAccountController } from './useCases/createAccount/createAccountController';
-import { GetProfile } from './useCases/findProfile';
-import { GetAllSections } from './useCases/findSection';
-import { GetSection } from './useCases/findSection';
-import { PostSectionController } from './useCases/postSection/postSectionController';
-import { RefreshTokenController } from './useCases/refreshToken/refreshTokenController';
 
-export const routes = express.Router();
+import { account } from './routes/account';
+import { auth } from './routes/auth';
+import { components } from './routes/components';
+import { items } from './routes/items';
+import { profile } from './routes/profile';
+import { section } from './routes/section';
 
-const createAccount = new CreateAccountController();
-const findProfile = new GetProfile();
-const authAccount = new AuthenticateAccountController();
-const postSection = new PostSectionController();
-const findAllSections = new GetAllSections();
-const findSection = new GetSection();
-const refreshToken = new RefreshTokenController();
+export const router = express.Router();
 
-routes.post('/accounts', createAccount.handle);
-
-routes.post('/auth', authAccount.handle);
-routes.post('/refresh-token', refreshToken.handle)
-
-routes.put('/profile');
-
-routes.post('/section', ensureAuthenticated, postSection.handle);
-
-routes.get('/sections', findAllSections.handle);
-routes.get('/section', findSection.handle);
-
-routes.get('/profile', findProfile.handle);
-
+router.use('/account', account);
+router.use('/auth', auth);
+router.use('/components', components);
+router.use('/items', items);
+router.use('/profile', profile);
+router.use('/section', section);

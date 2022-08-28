@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.section = void 0;
+const express_1 = __importDefault(require("express"));
+const getSection_1 = require("../useCases/get/getSection");
+const getSection_2 = require("../useCases/get/getSection");
+const updateSectionController_1 = require("../useCases/put/updateSection/updateSectionController");
+const postSectionController_1 = require("../useCases/post/postSection/postSectionController");
+const deleteSectionController_1 = require("../useCases/delete/deleteSection/deleteSectionController");
+const ensureAuthentication_1 = require("../middlewares/ensureAuthentication");
+const ensureAccountMatchs_1 = require("../middlewares/ensureAccountMatchs");
+const getSection = new getSection_2.GetSection();
+const updateSection = new updateSectionController_1.UpdateSectionController();
+const postSection = new postSectionController_1.PostSectionController();
+const deleteSection = new deleteSectionController_1.DeleteSectionController();
+const getAllSections = new getSection_1.GetAllSections();
+exports.section = express_1.default.Router();
+exports.section.get('/', getSection.handle);
+exports.section.post('/', ensureAuthentication_1.ensureAuthenticated, ensureAccountMatchs_1.ensureAccountMatchs, postSection.handle);
+exports.section.put('/', ensureAuthentication_1.ensureAuthenticated, ensureAccountMatchs_1.ensureAccountMatchs, updateSection.handle);
+exports.section.delete('/', ensureAuthentication_1.ensureAuthenticated, ensureAccountMatchs_1.ensureAccountMatchs, deleteSection.handle);
+exports.section.get('/all', getAllSections.handle);
